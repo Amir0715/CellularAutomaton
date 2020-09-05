@@ -1,0 +1,8 @@
+material/2.*/3.*
+material/2.*/4.*
+material/2.*/5.*
+material/2.*/6.*
+material/3.*
+.idea
+bin
+obj
