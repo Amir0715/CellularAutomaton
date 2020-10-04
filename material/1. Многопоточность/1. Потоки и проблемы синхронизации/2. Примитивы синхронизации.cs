@@ -85,5 +85,34 @@ namespace Parprog.Threading
 
             Console.ReadKey();
         }
+        
+        public static void ExampleDeadlock()
+        {
+            var object1 = new object();
+            var object2 = new object();
+            void LockMe()
+            {
+                lock (object1)
+                {
+                    Thread.Sleep(1000);
+                    Console.WriteLine("Locked 1");
+                    lock (object2)
+                    {
+                        Console.WriteLine("Locked then 2");
+                    }
+                }
+            }
+            
+            new Thread(LockMe).Start();
+            lock (object2)
+            {
+                Thread.Sleep(1000);
+                Console.WriteLine("Locked 2");
+                lock (object1)
+                {
+                    Console.WriteLine("Locked then 1");
+                }
+            }
+        }
     }
 }

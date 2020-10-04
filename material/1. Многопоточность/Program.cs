@@ -4,15 +4,15 @@
     {
         private static void Main(string[] args)
         {
-            Threads.ExampleCurrentThreadInfo();
-            Threads.ExampleCreateAndStartThread();
-            Threads.ExampleParametrizedThread();
+            // Threads.ExampleCurrentThreadInfo();
+            // Threads.ExampleCreateAndStartThread();
+            // Threads.ExampleParametrizedThread();
+            // Threads.ExampleRaceCondition();
             
-            SyncErrors.ExampleRaceCondition();
-            
-            SyncPrimitives.ExampleLocker();
-            SyncPrimitives.ExampleMutex();
-            SyncPrimitives.ExampleSemaphore();
+            // SyncPrimitives.ExampleLocker();
+            // SyncPrimitives.ExampleMutex();
+            // SyncPrimitives.ExampleSemaphore();
+            // SyncPrimitives.ExampleDeadlock();
         }
     }
 }

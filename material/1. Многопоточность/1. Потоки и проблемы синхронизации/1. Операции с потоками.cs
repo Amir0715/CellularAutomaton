@@ -68,5 +68,30 @@ namespace Parprog.Threading
                 }
             }
         }
+        
+        /// <summary>
+        /// Race Condition - состояние, когда к одной и той же памяти обращаются из разных потоков на чтение
+        /// и запись
+        /// </summary>
+        public static void ExampleRaceCondition()
+        {
+            var x = 0;
+            var sum = 0;
+            var thread = new Thread(Setter);
+            thread.Start();
+            //Thread.Sleep(1); // remove comment and have fun
+            x = 5;
+
+            void Setter()
+            {
+                if (x == 0)
+                {
+                    sum = 100;
+                }
+            }
+
+            Thread.Sleep(1000);
+            Console.WriteLine($"x={x}, sum={sum}");
+        }
     }
 }
