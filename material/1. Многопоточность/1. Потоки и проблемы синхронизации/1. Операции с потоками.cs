@@ -3,8 +3,14 @@ using System.Threading;
 
 namespace Parprog.Threading
 {
-    public static class BasicThreading
+    /// <summary>
+    /// Примеры, показывающие основные способы работы с потоками (класс Thread).
+    /// </summary>
+    public static class Threads
     {
+        /// <summary>
+        /// Получение информации о текущем потоке исполнения.
+        /// </summary>
         public static void ExampleCurrentThreadInfo()
         {
             var thread = Thread.CurrentThread;
@@ -16,6 +22,9 @@ namespace Parprog.Threading
             Console.WriteLine($"Статус потока: {thread.ThreadState}");
         }
 
+        /// <summary>
+        /// Создание и запуск нового потока с функцией, не требующей аргументов.
+        /// </summary>
         public static void ExampleCreateAndStartThread()
         {
             var thread = new Thread(new ThreadStart(Count));
@@ -40,6 +49,9 @@ namespace Parprog.Threading
             }
         }
 
+        /// <summary>
+        /// Создание и запуск потока с функцией, требующей аргументы.
+        /// </summary>
         public static void ExampleParametrizedThread()
         {
             var thread = new Thread(new ParameterizedThreadStart(Count));
@@ -56,29 +68,5 @@ namespace Parprog.Threading
                 }
             }
         }
-
-        public static void ExampleRaceCondition()
-        {
-            var x = 0;
-            for (var i = 1; i < 5; i++)
-            {
-                var thread = new Thread(Increment);
-                thread.Name = $"Thread {i}";
-                thread.Start(i * 10);
-            }
-
-            void Increment(object data)
-            {
-                var timeout = (int) data;
-                for (var i = 1; i < 9; i++)
-                {
-                    Console.WriteLine("{0}: {1}", Thread.CurrentThread.Name, x);
-                    x++;
-                    Thread.Sleep(timeout);
-                }
-            }
-        }
-
-        
     }
 }

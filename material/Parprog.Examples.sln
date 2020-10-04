@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Parprog.Threading", "2. Многопоточность\Parprog.Threading.csproj", "{27BEE5E0-DAD9-4F39-9DF2-ADBD9855E017}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Threading", "1. Многопоточность\Threading.csproj", "{27BEE5E0-DAD9-4F39-9DF2-ADBD9855E017}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

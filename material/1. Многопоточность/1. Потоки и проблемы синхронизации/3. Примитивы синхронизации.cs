@@ -1,7 +1,7 @@
 using System;
 using System.Threading;
 
-namespace Parprog.Threading._2._Примитивы_синхронизации
+namespace Parprog.Threading
 {
     public class SyncPrimitives
     {
