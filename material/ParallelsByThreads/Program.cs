@@ -1,10 +1,10 @@
-﻿using System.Threading;
+﻿using System.Threading.Tasks;
 
 namespace ParallelsByThreads
 {
     class Program
     {
-        private static void Main(string[] args)
+        private static async Task Main(string[] args)
         {
             ResultsContainer.Attach("--- EXAMPLES ---");
             
@@ -39,7 +39,13 @@ namespace ParallelsByThreads
             
             // NativeThreadPoolExamples.BasicThreadPoolUsage();
             
-            PrincipalThreadPoolExamples.HowToUse();
+            // PrincipalThreadPoolExamples.HowToUse();
+            
+            // await TaskExamples.AsyncOperations(); // Попробуйте убрать здесь await и убрать async из Main
+            await TaskExamples.ReadWriteFileAsync();
+            ResultsContainer.Attach("--- AND ---");
+            TaskExamples.ReadWriteFileNotAsync();
+            
             
             ResultsContainer.Attach("--- EXAMPLES ---");
             ResultsContainer.Print();
