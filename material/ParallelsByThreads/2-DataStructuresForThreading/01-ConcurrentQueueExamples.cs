@@ -27,9 +27,8 @@ namespace ParallelsByThreads
                 var c = 0;
                 for (var i = 0; i < 10000; i++)
                 {
-                    if (queue.TryDequeue(out var result))
+                    if (queue.TryDequeue(out _))
                     {
-                        //result.ToString().Print();
                         c++;
                     }
                 }
@@ -76,13 +75,12 @@ namespace ParallelsByThreads
                 var c = 0;
                 for (var i = 0; i < 10000; i++)
                 {
-                    if (queue.TryDequeue(out var result))
+                    if (queue.TryDequeue(out _))
                     {
-                        //result.ToString().Print();
                         c++;
                     }
                 }
-                $"received count: {c}".ToString().Print();
+                $"received count: {c}".Print();
             }
             
             // Пусть у нас будет два потока добавлять элементы

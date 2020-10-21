@@ -49,7 +49,7 @@ namespace ParallelsByThreads
                     // Во что возводим
                     var b = random.Next(max);
                     // Паттерн ключа
-                    var key = $"{a}{b}";
+                    var key = $"{a}/{b}";
                     // Есть ли в кэше
                     if (cache.TryGetValue(key, out var pair))
                     {

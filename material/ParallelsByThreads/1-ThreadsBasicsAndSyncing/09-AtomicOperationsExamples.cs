@@ -16,7 +16,7 @@ namespace ParallelsByThreads
                 {
                     counter++; // Операция не атомарная
                     //++counter;    // Операция не атомарная
-                    //counter = counter + 1; // Операция не атомарная
+                    //counter += 1; // Операция не атомарная
                     //Interlocked.Increment(ref counter); // Атомарный инкремент
                     //Interlocked.Add(ref counter, 2);   // Атомарное прибавление
                 }

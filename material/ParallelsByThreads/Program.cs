@@ -42,10 +42,19 @@ namespace ParallelsByThreads
             // PrincipalThreadPoolExamples.HowToUse();
             
             // await TaskExamples.AsyncOperations(); // Попробуйте убрать здесь await и убрать async из Main
-            await TaskExamples.ReadWriteFileAsync();
-            ResultsContainer.Attach("--- AND ---");
-            TaskExamples.ReadWriteFileNotAsync();
+            // await Task.Delay(1000);
+            // await TaskExamples.ReadWriteFileAsync();
+            // ResultsContainer.Attach("--- AND ---");
+            // TaskExamples.ReadWriteFileNotAsync();
+
+            // await MoreTaskExamples.HowToHandleExceptions();
+            // await MoreTaskExamples.HowToWaitForTasks();
+
+            // await ChannelsExamples.BasicUsage();
+
+            await AsyncEnumerableExamples.BasicUsage();
             
+            // await UsePowerOfAsyncAwait.Usage();
             
             ResultsContainer.Attach("--- EXAMPLES ---");
             ResultsContainer.Print();

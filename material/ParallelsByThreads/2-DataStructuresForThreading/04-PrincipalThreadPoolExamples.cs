@@ -39,6 +39,12 @@ namespace ParallelsByThreads
                     Thread.Sleep(500);
                     continue;
                 }
+                Action a; // a:: void -> void
+                Action<int> b; // b :: int -> void
+                Action<int, string, object> c; // c :: (int, string, object) -> void
+                Predicate<int> d; // d :: int -> bool
+                Func<int, Thread, string> e; // e :: int -> string
+                Func<string> f; // f :: void -> string
                 this.AvailableThreadsIds.TryRemove(guid, out _);
                 $"Thread[{guid}]: took task".Print();
                 task.Invoke();
