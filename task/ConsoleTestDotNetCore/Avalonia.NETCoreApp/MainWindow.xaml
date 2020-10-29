@@ -15,7 +15,8 @@
         <StackPanel Orientation="Vertical" MaxWidth="1000">
             <Button Name="GreetButton" Click="GreetButton_Click">Say Hello!</Button> 
             <!-- Add event GreetButton_Click to button, when we click to button event run -->
-            <Image Name="Cat" IsVisible="True" Width="1000" Height="1000"></Image>
+            <Image Name="Field" IsVisible="True" Width="300" Height="400"></Image>
+            <Canvas Name="Canvas" IsVisible="True" Width="200" Height="200"></Canvas>
         </StackPanel>
     </StackPanel>
     

@@ -1,46 +1,61 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Automaton.core
 {
     class TaskManager
     {
-        private Task[] tasks;
-        private int size;
+        private Queue<Task> tasks;
+        private bool isStarted = false;
+
         public TaskManager()
         {
+            tasks = new Queue<Task>();
         }
 
         public void AddTask(Task task)
         {
             if (task is null)
             {
-                //FIXME:
+                throw new TaskIsNullException("Task is null");
             }
-            if(size == 0)
+            if (tasks.Count == 0)
             {
-                tasks = new Task[size+1];
+                tasks.Enqueue(task);
             }
-            else
-            {
-                System.Array.Resize(ref tasks, size+1);
-            }
-            tasks[size] = task;
-            //return tasks[size++];
-            size++;
         }
 
         public void RunAll()
         {
-            foreach(var t in tasks)
+            if (!isStarted) return;
+            isStarted = true;
+            foreach (var t in tasks)
             {
-                
                 t.Start();
             }
         }
 
         public void WaitAll()
         {
-            Task.WaitAll(tasks);
+            foreach (var task in tasks)
+            {
+                task.Wait();
+            }
+            isStarted = false;
+        }
+
+        public void Clear()
+        {
+            if (tasks.Count == 0)
+            {
+                throw new TasksSizeIsNullException("Size of task eq 0");
+            }
+            for (var i = 0; i < tasks.Count; i++)
+            {
+                tasks.Dequeue();
+            }
+            isStarted = false;
         }
     }
 }

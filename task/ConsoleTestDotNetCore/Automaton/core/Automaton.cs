@@ -3,8 +3,8 @@ namespace Automaton.core
     public class Automaton
     {
         private Field _field;
-        public bool isStarted { get; private set; }
-
+        public bool IsStarted { get; private set; }
+        
         public Automaton(int width, int height)
         {
             _field = new Field(width, height);
@@ -12,16 +12,16 @@ namespace Automaton.core
 
         public void Start()
         {
-            if (isStarted == false)
-                isStarted = true;
+            if (IsStarted == false)
+                IsStarted = true;
             
         }
 
         public void NextGeneration()
         {
-            if (isStarted)
+            if (IsStarted)
             {
-                _field?.NextGeneration();
+                _field.NextGeneration();
             }
         }
     }
