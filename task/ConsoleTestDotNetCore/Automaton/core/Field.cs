@@ -5,7 +5,7 @@ namespace Automaton.core
 {
     public class Field
     {
-        private Cell[][] Data { get; set; }
+        public Cell[][] Data { get; set; }
         private Func<Cell, Cell> Transform { set; get; }
         private TaskManager taskManager;
         private int CountOfCores { get; set; }
@@ -52,7 +52,7 @@ namespace Automaton.core
             }
         }
         
-        public void NextGeneration()
+        public Cell[][] NextGeneration()
         {
             var tmp = new Cell[Columns][];
             for (var i = 0; i < Columns; i++)
@@ -75,9 +75,9 @@ namespace Automaton.core
             taskManager.WaitAll();
             
             Data = tmp;
+            return Data;
         }
-
-
+        
         private void NextGenerationCell(ref Cell[][] tmp, int indexStart, int indexEnd)
         {
             for (var i = indexStart; i < indexEnd; i++)
@@ -85,7 +85,7 @@ namespace Automaton.core
                 for (var j = 0; j < Rows; j++)
                 {
                     UpdateNumbersOfNeigbors(i, j);
-                    tmp[i][j] = Transform(Data[i][j]);
+                    tmp[i][j] = Data[i][j].Life();
                 }
             }
         }

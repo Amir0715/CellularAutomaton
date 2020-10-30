@@ -2,22 +2,20 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:avaloniaUi="clr-namespace:AvaloniaUI"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Avalonia.NETCoreApp.MainWindow"
         Title="Avalonia.NETCoreApp"
         WindowState="Maximized">
-    <StackPanel Orientation="Horizontal">
-        <StackPanel Orientation="Vertical" Width="300">
-            <Button Name="StartBtn">Start</Button>
-            <Button Name="StopBtn">Stop</Button>
-            <Button Name="GenerateBtn">Generate</Button>
-        </StackPanel>
-        <StackPanel Orientation="Vertical" MaxWidth="1000">
-            <Button Name="GreetButton" Click="GreetButton_Click">Say Hello!</Button> 
-            <!-- Add event GreetButton_Click to button, when we click to button event run -->
-            <Image Name="Field" IsVisible="True" Width="300" Height="400"></Image>
-            <Canvas Name="Canvas" IsVisible="True" Width="200" Height="200"></Canvas>
-        </StackPanel>
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+            <StackPanel Orientation="Vertical" Width="200" Background="Gray">
+                <Button Name="StartBtn">Start</Button>
+                <Button Name="StopBtn">Stop</Button>
+                <Button Name="GenerateBtn">Generate</Button>
+                <Button Name="GreetButton" Click="GreetButton_Click">Say Hello!</Button>
+            </StackPanel>
+            <StackPanel Name="RenderView" Orientation="Vertical" Background="Gainsboro" MinHeight="600" MinWidth="600">
+                <avaloniaUi:RenderControl Name="RenderControl" ></avaloniaUi:RenderControl>
+            </StackPanel>
     </StackPanel>
-    
 </Window>

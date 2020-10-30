@@ -1,23 +1,33 @@
+using System;
+using Automaton.core;
 using Avalonia.Media.Imaging;
 using Avalonia.Controls;
+using AvaloniaUI;
+using Automaton = Automaton.core.Automaton;
 using Image = Avalonia.Controls.Image;
 
 namespace Avalonia.NETCoreApp
 {
     public class Frontend
     {
-        private Automaton.core.Automaton _automaton;
-        private Bitmap _bitmap { get ; set; }
-        private Image _image { get; set; }
-        private MainWindow _mainWindow;
-
-        Frontend()
-        {
-            _automaton = new Automaton.core.Automaton(200,300);
-            _image = _mainWindow.GetInstance().FindControl<Image>("Cat");
-            _image.Source = _bitmap;
-        }
+        private global::Automaton.core.Automaton _automaton;
         
+        public Frontend(int columns, int rows)
+        {
+            _automaton = new global::Automaton.core.Automaton(columns,rows);
+        }
+
+        public Cell[][] GetNextGeneration()
+        {
+            _automaton.Start();
+            return _automaton.NextGeneration();
+            _automaton.Stop();
+        }
+
+        public void Generate()
+        {
+            _automaton.Generate();
+        }
         
     }
 }

@@ -14,38 +14,38 @@
             IsAlive = r.Next(100) < 50;
         }
         
-        public Cell Incriment(Cell cell)
+        public Cell Increment()
         {
-            cell.Value = cell.Value + 1;
-            cell.IsAlive = true;
-            return cell;
+            this.Value += 1;
+            this.IsAlive = true;
+            return this;
         }
 
-        public Cell Dicriment(Cell cell)
+        public Cell Decrement()
         {
-            cell.Value = cell.Value - 1;
-            cell.IsAlive = false;
-            return cell;
+            this.Value -= 1;
+            this.IsAlive = false;
+            return this;
         }
 
-        public Cell Life(Cell cell)
+        public Cell Life()
         {
-            if (cell.IsAlive)
+            if (this.IsAlive)
             {
-                if (cell.NumberOfNeigbors < 2 || cell.NumberOfNeigbors > 3)
-                    cell.IsAlive = false;
+                if (NumberOfNeigbors < 2 || NumberOfNeigbors > 3)
+                    IsAlive = false;
             }
             else
             {
-                if (cell.NumberOfNeigbors == 3)
-                    cell.IsAlive = true;
+                if (NumberOfNeigbors == 3)
+                    IsAlive = true;
             }
-            return cell;
+            return this;
         }
 
-        public Cell Nothing(Cell cell)
+        public Cell Nothing()
         {
-            return cell;
+            return this;
         }
     }
 }

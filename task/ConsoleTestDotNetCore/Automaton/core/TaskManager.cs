@@ -4,10 +4,11 @@ using System.Threading.Tasks;
 
 namespace Automaton.core
 {
+    // TODO : statistics
     class TaskManager
     {
         private Queue<Task> tasks;
-        private bool isStarted = false;
+        
 
         public TaskManager()
         {
@@ -17,19 +18,14 @@ namespace Automaton.core
         public void AddTask(Task task)
         {
             if (task is null)
-            {
                 throw new TaskIsNullException("Task is null");
-            }
-            if (tasks.Count == 0)
-            {
+            else
                 tasks.Enqueue(task);
-            }
         }
 
         public void RunAll()
         {
-            if (!isStarted) return;
-            isStarted = true;
+            
             foreach (var t in tasks)
             {
                 t.Start();
@@ -38,14 +34,16 @@ namespace Automaton.core
 
         public void WaitAll()
         {
-            foreach (var task in tasks)
+            if (tasks.Count == 0)
             {
-                task.Wait();
+                throw new TasksSizeIsNullException("Size of task eq 0");
             }
-            isStarted = false;
+            
+            Task.WaitAll(tasks.ToArray());
+            
         }
 
-        public void Clear()
+        private void Clear()
         {
             if (tasks.Count == 0)
             {
@@ -55,7 +53,7 @@ namespace Automaton.core
             {
                 tasks.Dequeue();
             }
-            isStarted = false;
+            
         }
     }
 }

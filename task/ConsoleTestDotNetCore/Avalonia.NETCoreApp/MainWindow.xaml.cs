@@ -10,15 +10,21 @@ using Avalonia.Media;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform;
 using Avalonia.Rendering;
+using AvaloniaUI;
 
 namespace Avalonia.NETCoreApp
 {
     public class MainWindow : Window
     {
         private static MainWindow _window = new MainWindow();
+
         public MainWindow()
         {
             InitializeComponent();
+
+#if DEBUG
+            this.AttachDevTools();
+#endif
         }
 
         public MainWindow GetInstance()
@@ -34,14 +40,11 @@ namespace Avalonia.NETCoreApp
         public void GreetButton_Click(object sender, RoutedEventArgs e)
         {
             Console.WriteLine(@"CLICK!");
-            //Getting Controls references
             
-            //Setting the value
-            var imageControl = this.FindControl<Image>("Field");
-            var canvas = this.FindControl<Canvas>("Canvas");
-            imageControl.Source = new Bitmap("//home/amir-kamolov/photo/cat.jpg");
-            Thread.Sleep(500);
-            bool[,] dots = {{true,false},{false,true}};
+            Console.WriteLine(this.DesiredSize);
+            var rd = this.FindControl<RenderControl>("RenderControl");
+            //rd.Render();
+            var c = new Canvas();
         }
 
         public void StartBtn_Click(object sender, RoutedEventArgs s)
@@ -60,4 +63,5 @@ namespace Avalonia.NETCoreApp
         }
         
     }
+    
 }

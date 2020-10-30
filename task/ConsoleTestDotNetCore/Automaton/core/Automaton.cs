@@ -8,21 +8,37 @@ namespace Automaton.core
         public Automaton(int width, int height)
         {
             _field = new Field(width, height);
-        }
-
-        public void Start()
-        {
-            if (IsStarted == false)
-                IsStarted = true;
             
         }
+        public void Start()
+        {
+            if (!IsStarted)
+                IsStarted = true;
+        }
 
-        public void NextGeneration()
+        public void Stop()
         {
             if (IsStarted)
             {
-                _field.NextGeneration();
+                IsStarted = false;
             }
         }
+        public Cell[][] NextGeneration()
+        {
+            if (IsStarted)
+            {
+                return _field.NextGeneration();
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public void Generate()
+        {
+            _field.Generate();
+        }
+        
     }
 }
