@@ -17,7 +17,7 @@ namespace Avalonia.NETCoreApp
     public class MainWindow : Window
     {
         private static MainWindow _window = new MainWindow();
-
+        private Frontend frontend;
         public MainWindow()
         {
             InitializeComponent();
@@ -39,24 +39,22 @@ namespace Avalonia.NETCoreApp
         
         public void GreetButton_Click(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine(@"CLICK!");
-            
-            
+            Console.WriteLine(@"CLICK!" + sender + e);
         }
 
         public void StartBtn_Click(object sender, RoutedEventArgs s)
         {
-            
+            Frontend.GetInstance().Start();
         }
 
         public void StopBtn_Click(object sender, RoutedEventArgs s)
         {
-            
+            Frontend.GetInstance().Stop();
         }
 
         public void GenerateBtn_Click(object sender, RoutedEventArgs s)
         {
-            
+            Frontend.GetInstance().Generate();
         }
         
     }

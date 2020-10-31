@@ -11,18 +11,37 @@ namespace Avalonia.NETCoreApp
     public class Frontend
     {
         private global::Automaton.core.Automaton _automaton;
-        
-        public Frontend(int cols, int rows)
+        private static Frontend instance;
+        private Frontend(int cols, int rows)
         {
             _automaton = new global::Automaton.core.Automaton(cols,rows);
+            
             Generate();
         }
 
-        public Cell[][] GetNextGeneration()
+        public static Frontend GetInstance(int cols=0, int rows=0)
+        {
+            if (instance == null)
+            {
+                instance = new Frontend(cols, rows);
+            }
+
+            return instance;
+        }
+        
+        public void Start()
         {
             _automaton.Start();
-            return _automaton.NextGeneration();
+        }
+
+        public void Stop()
+        {
             _automaton.Stop();
+        }
+        
+        public Cell[][] GetNextGeneration()
+        {
+            return _automaton.NextGeneration();
         }
 
         public Cell[][] Generate()

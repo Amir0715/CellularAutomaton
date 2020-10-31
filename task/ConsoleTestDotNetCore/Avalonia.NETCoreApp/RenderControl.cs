@@ -30,11 +30,10 @@ namespace AvaloniaUI
 
         public RenderControl() : base()
         {
-            //FIXME: Разобраться с cols и rows'ами
             resolution = 200;
             cols = (int) (1664/resolution); 
             rows = (int) (1016/resolution);
-            frontend = new Frontend(cols: cols, rows: rows);
+            frontend = Frontend.GetInstance(cols: cols, rows: rows);
             rendrenOp = new RendrenOp(new Rect(0, 0, 1664,1016),frontend,cols,rows, resolution);
         }
         
@@ -93,7 +92,6 @@ namespace AvaloniaUI
                 this.cols = cols;
                 this.rows = rows;
                 this.frontend = frontend;
-                Console.WriteLine(@"RenderOp");
             }
             
             public void Render(IDrawingContextImpl context)
@@ -126,7 +124,6 @@ namespace AvaloniaUI
 
             private void DrawGrid(IBrush brush, IDrawingContextImpl context)
             {
-                
                 for (var i = 0; i <= cols; i++)
                 {
                     for (var j = 0; j <= rows; j++)
@@ -139,9 +136,6 @@ namespace AvaloniaUI
 
             private void DrawCells(IBrush brush, IDrawingContextImpl context)
             {
-                Console.WriteLine(@"DRAWING CELLS");
-                Console.WriteLine(data.Length);
-                Console.WriteLine(data[0].Length);
                 for (var i = 0; i < data.Length; i++)
                 {
                     for (var j = 0; j < data[0].Length; j++)
