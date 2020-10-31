@@ -12,9 +12,10 @@ namespace Avalonia.NETCoreApp
     {
         private global::Automaton.core.Automaton _automaton;
         
-        public Frontend(int columns, int rows)
+        public Frontend(int cols, int rows)
         {
-            _automaton = new global::Automaton.core.Automaton(columns,rows);
+            _automaton = new global::Automaton.core.Automaton(cols,rows);
+            Generate();
         }
 
         public Cell[][] GetNextGeneration()
@@ -24,9 +25,9 @@ namespace Avalonia.NETCoreApp
             _automaton.Stop();
         }
 
-        public void Generate()
+        public Cell[][] Generate()
         {
-            _automaton.Generate();
+            return _automaton.Generate();
         }
         
     }

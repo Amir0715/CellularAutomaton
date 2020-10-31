@@ -41,10 +41,7 @@ namespace Avalonia.NETCoreApp
         {
             Console.WriteLine(@"CLICK!");
             
-            Console.WriteLine(this.DesiredSize);
-            var rd = this.FindControl<RenderControl>("RenderControl");
-            //rd.Render();
-            var c = new Canvas();
+            
         }
 
         public void StartBtn_Click(object sender, RoutedEventArgs s)

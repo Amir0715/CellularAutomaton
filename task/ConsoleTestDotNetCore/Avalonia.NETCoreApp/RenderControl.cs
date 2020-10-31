@@ -7,6 +7,7 @@ using Avalonia.Controls;
 using Avalonia.Direct2D1.Media;
 using Avalonia.Input;
 using Avalonia.Media;
+using Avalonia.Media.Immutable;
 using Avalonia.NETCoreApp;
 using Avalonia.Platform;
 using Avalonia.Rendering;
@@ -16,9 +17,11 @@ using Avalonia.Threading;
 namespace AvaloniaUI
 {
     public class RenderControl : Control
-    {
+    {   
         
-        private int i = 0;
+        private int cols;
+        private int rows;
+        private int resolution;
 
         public RenderControl(Rect bounds) : this()
         {
@@ -27,6 +30,12 @@ namespace AvaloniaUI
 
         public RenderControl() : base()
         {
+            //FIXME: Разобраться с cols и rows'ами
+            resolution = 200;
+            cols = (int) (1664/resolution); 
+            rows = (int) (1016/resolution);
+            frontend = new Frontend(cols: cols, rows: rows);
+            rendrenOp = new RendrenOp(new Rect(0, 0, 1664,1016),frontend,cols,rows, resolution);
         }
         
         public override void Render(DrawingContext context)
@@ -34,15 +43,15 @@ namespace AvaloniaUI
             try
             {
                 
-                context.Custom(new RendrenOp(new Rect(0,0,1664,1016),10));
+                context.Custom(rendrenOp);
                 
                 // При передаче котекста в другие методы не рисуется, мне кажется 
                 //DrawCells(Brushes.Red, context);
                 //DrawGrid(Brushes.Black, ref context);
                 
                 // не совсем понятно чем отличается IvokeAsync и Post, мне кажется порядком вызова
-                //Dispatcher.UIThread.InvokeAsync(InvalidateVisual, DispatcherPriority.Background);
-                Dispatcher.UIThread.Post(InvalidateVisual, DispatcherPriority.Background);
+                Dispatcher.UIThread.InvokeAsync(InvalidateVisual, DispatcherPriority.Background);
+                //Dispatcher.UIThread.Post(InvalidateVisual, DispatcherPriority.Background);
                 base.Render(context);
                 
             }
@@ -56,7 +65,7 @@ namespace AvaloniaUI
         
 
 
-        class RendrenOp : ICustomDrawOperation
+        public class RendrenOp : ICustomDrawOperation
         {
 
             private double resolution;
@@ -64,55 +73,66 @@ namespace AvaloniaUI
             private int rows;
             private int cols;
             private Cell[][] data;
-            private double Height;
-            private double Width;
+            private double height;
+            private double width;
+
+
+            private readonly IBrush backgroundColor = Brushes.White;
+            private readonly IBrush gridColor = Brushes.Black;
+            private readonly IBrush cellColor = Brushes.Red;
+            
             public Rect Bounds { get; }
             public bool HitTest(Point p) => false;
             public bool Equals(ICustomDrawOperation other) => false;
-            public RendrenOp(Rect bounds, double resolution)
+            public RendrenOp(Rect bounds, Frontend frontend ,int cols, int rows,double resolution)
             {
                 Bounds = bounds;
                 this.resolution = resolution;
-                Height = Bounds.Height;
-                Width = Bounds.Width;
+                height = Bounds.Height;
+                width = Bounds.Width;
+                this.cols = cols;
+                this.rows = rows;
+                this.frontend = frontend;
+                Console.WriteLine(@"RenderOp");
             }
             
             public void Render(IDrawingContextImpl context)
             {
-                context.FillRectangle(Brushes.Gold, Bounds);
-                cols = (int) (Height / resolution); 
-                rows = (int) (Width / resolution);
-                DrawPixel(Brushes.Red, new Point(10,10),context);
-                
-                //context.DrawLine(new Pen(Brushes.Blue), new Point(100, 100), new Point(100,500));
-                
-                frontend = new Frontend(cols, rows);
-                frontend.Generate();
-                data = frontend.GetNextGeneration();
-                DrawCells(Brushes.Red, context);
-                
+                try
+                {
+                    context.FillRectangle(backgroundColor, Bounds);
+                    
+                    data = frontend.GetNextGeneration();
+                    
+                    DrawCells(cellColor, context);
+                    DrawGrid(gridColor, context);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
             }
 
             public void Dispose()
             {
-                
             }
             
             private void DrawPixel(IBrush brush,Point point, IDrawingContextImpl context)
             {
-                var pixel = new Rect(new Point(point.X * resolution, point.Y * resolution), new Size(1 * resolution, 1 * resolution));
+                var pixel = new Rect(new Point(point.X * resolution, point.Y * resolution), new Size( resolution, resolution));
                 context.FillRectangle(brush, pixel);
             }
 
             private void DrawGrid(IBrush brush, IDrawingContextImpl context)
             {
                 
-                for (var i = 0; i < rows; i++)
+                for (var i = 0; i <= cols; i++)
                 {
-                    for (var j = 0; j < cols; j++)
+                    for (var j = 0; j <= rows; j++)
                     {
-                        context.DrawLine(new Pen(brush), new Point(i*resolution, 0), new Point(i*resolution,Height));
-                        context.DrawLine(new Pen(brush), new Point(0, j*resolution), new Point(Width,j*resolution));
+                        context.DrawLine(new ImmutablePen(brush), new Point(i*resolution, 0), new Point(i*resolution,height));
+                        context.DrawLine(new ImmutablePen(brush), new Point(0, j*resolution), new Point(width,j*resolution));
                     }
                 }
             }
@@ -128,13 +148,14 @@ namespace AvaloniaUI
                     {
                         if (data[i][j].IsAlive)
                         {
-                            DrawPixel(brush,new Point(j,i), context);
+                            DrawPixel(brush,new Point(i,j), context);
                         }
                     }
                 }
             }
         }
-        
-        
+
+        private RendrenOp rendrenOp;
+        private Frontend frontend;
     }
 }

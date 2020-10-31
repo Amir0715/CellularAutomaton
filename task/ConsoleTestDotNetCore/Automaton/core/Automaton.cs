@@ -5,9 +5,9 @@ namespace Automaton.core
         private Field _field;
         public bool IsStarted { get; private set; }
         
-        public Automaton(int width, int height)
+        public Automaton(int cols, int rows)
         {
-            _field = new Field(width, height);
+            _field = new Field(cols, rows);
             
         }
         public void Start()
@@ -19,25 +19,20 @@ namespace Automaton.core
         public void Stop()
         {
             if (IsStarted)
-            {
                 IsStarted = false;
-            }
         }
+        
         public Cell[][] NextGeneration()
         {
             if (IsStarted)
-            {
                 return _field.NextGeneration();
-            }
             else
-            {
-                return null;
-            }
+                return _field.Data;
         }
 
-        public void Generate()
+        public Cell[][] Generate()
         {
-            _field.Generate();
+            return _field.Generate();
         }
         
     }

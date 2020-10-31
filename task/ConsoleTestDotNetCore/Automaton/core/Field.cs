@@ -12,14 +12,14 @@ namespace Automaton.core
         private int Columns { get; set; }
         private int Rows { get; set; }
 
-        public Field(int columns, int rows, Func<Cell, Cell> transform) : this(columns, rows)
+        public Field(int cols, int rows, Func<Cell, Cell> transform) : this(cols, rows)
         {
             this.Transform = transform;
         }
 
-        public Field(int columns, int rows)
+        public Field(int cols, int rows)
         {
-            if (columns < 0)
+            if (cols < 0)
             {
                 throw new RowsOrColumnsLessZeroException("Columns can't be less 0");
             }else if (rows < 0)
@@ -27,9 +27,9 @@ namespace Automaton.core
                 throw new RowsOrColumnsLessZeroException("Rows can't be less 0");
             }
             this.Rows = rows;
-            this.Columns = columns;
-            Data = new Cell[columns][];
-            for (var i = 0; i < columns; i++)
+            this.Columns = cols;
+            Data = new Cell[cols][];
+            for (var i = 0; i < cols; i++)
             {
                 Data[i] = new Cell[rows];
                 for (var j = 0; j < rows; j++)
@@ -40,7 +40,7 @@ namespace Automaton.core
             CountOfCores = 4;
         }
 
-        public void Generate()
+        public Cell[][] Generate()
         {
             var r = new Random();
             for (var i = 0; i < Columns; i++)
@@ -50,6 +50,8 @@ namespace Automaton.core
                     Data[i][j].Generate(r);
                 }
             }
+
+            return Data;
         }
         
         public Cell[][] NextGeneration()
