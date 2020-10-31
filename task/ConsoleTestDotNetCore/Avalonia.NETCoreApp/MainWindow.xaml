@@ -3,19 +3,21 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:avaloniaUi="clr-namespace:AvaloniaUI"
+        xmlns:netCoreApp="clr-namespace:Avalonia.NETCoreApp"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Avalonia.NETCoreApp.MainWindow"
         Title="Avalonia.NETCoreApp"
         WindowState="Maximized">
     <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-            <StackPanel Orientation="Vertical" Width="200" Background="Gray">
-                <Button Name="StartBtn">Start</Button>
-                <Button Name="StopBtn">Stop</Button>
-                <Button Name="GenerateBtn">Generate</Button>
-                <Button Name="GreetButton" Click="GreetButton_Click">Say Hello!</Button>
-            </StackPanel>
-            <StackPanel Name="RenderView" Orientation="Vertical" Background="Gainsboro" MinHeight="600" MinWidth="600">
-                <avaloniaUi:RenderControl Name="RenderControl" ></avaloniaUi:RenderControl>
-            </StackPanel>
+        <StackPanel Orientation="Vertical" Width="200" Background="Gray">
+            <Button Name="StartBtn">Start</Button>
+            <Button Name="StopBtn">Stop</Button>
+            <Button Name="GenerateBtn">Generate</Button>
+            <Button Name="GreetButton" Click="GreetButton_Click">Say Hello!</Button>
+        </StackPanel>
+        <StackPanel Name="RenderView" Orientation="Vertical" Background="Gainsboro">
+            <avaloniaUi:RenderControl Name="RenderControl" ></avaloniaUi:RenderControl>
+        </StackPanel>
+        
     </StackPanel>
 </Window>
