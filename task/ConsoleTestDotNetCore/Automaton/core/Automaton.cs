@@ -31,7 +31,11 @@ namespace Automaton.core
         {
             return _field.Generate();
         }
-        
+
+        public void SetCell(int x, int y, Cell c)
+        {
+            _field.SetCell(x, y, c);
+        }
         
     }
 }

@@ -111,5 +111,9 @@ namespace Automaton.core
             Data[x][y].NumberOfNeigbors = countOfNeigbors;
         }
 
+        public void SetCell(int x, int y, Cell c)
+        {
+            Data[x][y].IsAlive = !Data[x][y].IsAlive;
+        }
     }
 }

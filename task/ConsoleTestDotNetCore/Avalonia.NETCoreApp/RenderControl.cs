@@ -22,7 +22,8 @@ namespace AvaloniaUI
         private int cols;
         private int rows;
         private int resolution;
-
+        private RendrenOp rendrenOp;
+        private Frontend frontend;
         public RenderControl(Rect bounds) : this()
         {
             this.Bounds = bounds;
@@ -41,6 +42,7 @@ namespace AvaloniaUI
         {
             try
             {
+                this.Bounds = new Rect(new Point(0,0),new Size(1664, 1016));
                 
                 context.Custom(rendrenOp);
                 
@@ -148,8 +150,8 @@ namespace AvaloniaUI
                 }
             }
         }
-
-        private RendrenOp rendrenOp;
-        private Frontend frontend;
+        
+        
+        
     }
 }

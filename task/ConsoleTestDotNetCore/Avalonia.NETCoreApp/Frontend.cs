@@ -48,6 +48,11 @@ namespace Avalonia.NETCoreApp
         {
             return _automaton.Generate();
         }
+
+        public void SetCell(int x, int y)
+        {
+            _automaton.SetCell(x,y, new Cell());
+        }
         
     }
 }

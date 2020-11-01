@@ -8,16 +8,17 @@
         x:Class="Avalonia.NETCoreApp.MainWindow"
         Title="Avalonia.NETCoreApp"
         WindowState="Maximized">
-    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Background="Red">
+    
+    <StackPanel Orientation="Horizontal" Background="Red">
         <StackPanel Orientation="Vertical" Width="200" Background="Gray">
             <Button Name="StartBtn" Click="StartBtn_Click">Start</Button>
             <Button Name="StopBtn" Click="StopBtn_Click">Stop</Button>
             <Button Name="GenerateBtn" Click="GenerateBtn_Click">Generate</Button>
             <Button Name="GreetButton" Click="GreetButton_Click">Say Hello!</Button>
         </StackPanel>
-        <StackPanel Name="RenderView" Orientation="Vertical" Background="Gainsboro">
-            <avaloniaUi:RenderControl Name="RenderControl" ></avaloniaUi:RenderControl>
+        <StackPanel Name="RenderView" Background="Gray" Orientation="Vertical" Width="1668" Height="1016">
+            <avaloniaUi:RenderControl Name="RenderControl" Height="200" Width="200"></avaloniaUi:RenderControl>
         </StackPanel>
-        
+    
     </StackPanel>
 </Window>
