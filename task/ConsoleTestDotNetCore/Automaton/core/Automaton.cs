@@ -3,26 +3,39 @@ namespace Automaton.core
     public class Automaton
     {
         private Field _field;
-        public bool isStarted { get; private set; }
+        public bool IsStarted { get; private set; }
 
-        public Automaton(int width, int height)
+        public Automaton(int cols, int rows)
         {
-            _field = new Field(width, height);
+            _field = new Field(cols, rows);
         }
 
         public void Start()
         {
-            if (isStarted == false)
-                isStarted = true;
-            
+            if (!IsStarted)
+                IsStarted = true;
         }
 
-        public void NextGeneration()
+        public void Stop()
         {
-            if (isStarted)
-            {
-                _field?.NextGeneration();
-            }
+            if (IsStarted)
+                IsStarted = false;
         }
+
+        public Cell[][] NextGeneration()
+        {
+            return IsStarted ? _field.NextGeneration() : _field.Data;
+        }
+
+        public Cell[][] Generate()
+        {
+            return _field.Generate();
+        }
+
+        public void SetCell(int x, int y, Cell c)
+        {
+            _field.SetCell(x, y, c);
+        }
+        
     }
 }
