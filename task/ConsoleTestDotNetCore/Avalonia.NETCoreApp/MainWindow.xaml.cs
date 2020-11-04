@@ -1,24 +1,15 @@
 using System;
-using System.Threading;
-using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Direct2D1.Media;
-using Avalonia.Direct2D1.Media.Imaging;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
-using Avalonia.Media;
-using Avalonia.Media.Imaging;
-using Avalonia.Platform;
-using Avalonia.Rendering;
-using AvaloniaUI;
 
 namespace Avalonia.NETCoreApp
 {
     public class MainWindow : Window
     {
         private static MainWindow _window = new MainWindow();
-        private StackPanel stackPanel;
-        private Frontend frontend;
+        private StackPanel StackPanel;
+        private Frontend Frontend;
         public MainWindow()
         {
             InitializeComponent();
@@ -36,8 +27,8 @@ namespace Avalonia.NETCoreApp
         private void InitializeComponent()
         {
             AvaloniaXamlLoader.Load(this);
-            stackPanel = this.FindControl<StackPanel>("RenderView");
-            stackPanel.PointerPressed += SetCellPointerPressed;
+            StackPanel = this.FindControl<StackPanel>("RenderView");
+            StackPanel.PointerPressed += SetCellPointerPressed;
             
         }
         
@@ -64,9 +55,9 @@ namespace Avalonia.NETCoreApp
         public void SetCellPointerPressed(object sender, RoutedEventArgs e)
         {
             var le = e as Avalonia.Input.PointerEventArgs;
-            var position = le.GetPosition(stackPanel);
-            int x = (int) (position.X / 200);
-            int y = (int) (position.Y / 200);
+            var position = le.GetPosition(StackPanel);
+            int x = (int) (position.X / 300);
+            int y = (int) (position.Y / 300);
             Frontend.GetInstance().SetCell(x, y);
         }
         

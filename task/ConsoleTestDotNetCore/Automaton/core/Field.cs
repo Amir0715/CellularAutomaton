@@ -7,7 +7,7 @@ namespace Automaton.core
     {
         public Cell[][] Data { get; set; }
         private Func<Cell, Cell> Transform { set; get; }
-        private TaskManager taskManager;
+        private TaskManager TaskManager;
         private int CountOfCores { get; set; }
         private int Columns { get; set; }
         private int Rows { get; set; }
@@ -62,19 +62,19 @@ namespace Automaton.core
                 tmp[i] = new Cell[Rows];
             }
 
-            taskManager = new TaskManager();
+            TaskManager = new TaskManager();
             var lengthOfOneRange = Columns / CountOfCores;
 
             for (var i = 0; i < CountOfCores; i++) {
                 var indexStart = i * lengthOfOneRange;
                 var indexEnd = (i + 1) * lengthOfOneRange;
-                taskManager.AddTask(i == CountOfCores - 1
+                TaskManager.AddTask(i == CountOfCores - 1
                     ? new Task(() => NextGenerationCell(ref tmp, indexStart, Columns))
                     : new Task(() => NextGenerationCell(ref tmp, indexStart, indexEnd)));
             }
 
-            taskManager.RunAll();
-            taskManager.WaitAll();
+            TaskManager.RunAll();
+            TaskManager.WaitAll();
             
             Data = tmp;
             return Data;

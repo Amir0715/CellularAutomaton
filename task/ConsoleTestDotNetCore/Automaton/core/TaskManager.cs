@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Automaton.core
@@ -7,12 +6,12 @@ namespace Automaton.core
     // TODO : statistics
     class TaskManager
     {
-        private Queue<Task> tasks;
+        private Queue<Task> Tasks;
         
 
         public TaskManager()
         {
-            tasks = new Queue<Task>();
+            Tasks = new Queue<Task>();
         }
 
         public void AddTask(Task task)
@@ -20,13 +19,13 @@ namespace Automaton.core
             if (task is null)
                 throw new TaskIsNullException("Task is null");
             else
-                tasks.Enqueue(task);
+                Tasks.Enqueue(task);
         }
 
         public void RunAll()
         {
             
-            foreach (var t in tasks)
+            foreach (var t in Tasks)
             {
                 t.Start();
             }
@@ -34,24 +33,24 @@ namespace Automaton.core
 
         public void WaitAll()
         {
-            if (tasks.Count == 0)
+            if (Tasks.Count == 0)
             {
                 throw new TasksSizeIsNullException("Size of task eq 0");
             }
             
-            Task.WaitAll(tasks.ToArray());
+            Task.WaitAll(Tasks.ToArray());
             
         }
 
         private void Clear()
         {
-            if (tasks.Count == 0)
+            if (Tasks.Count == 0)
             {
                 throw new TasksSizeIsNullException("Size of task eq 0");
             }
-            for (var i = 0; i < tasks.Count; i++)
+            for (var i = 0; i < Tasks.Count; i++)
             {
-                tasks.Dequeue();
+                Tasks.Dequeue();
             }
             
         }

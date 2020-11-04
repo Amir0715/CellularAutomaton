@@ -2,7 +2,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:avaloniaUi="clr-namespace:AvaloniaUI"
         xmlns:netCoreApp="clr-namespace:Avalonia.NETCoreApp"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="Avalonia.NETCoreApp.MainWindow"
@@ -17,7 +16,7 @@
             <Button Name="GreetButton" Click="GreetButton_Click">Say Hello!</Button>
         </StackPanel>
         <StackPanel Name="RenderView" Background="Gray" Orientation="Vertical" Width="1668" Height="1016">
-            <avaloniaUi:RenderControl Name="RenderControl" Height="200" Width="200"></avaloniaUi:RenderControl>
+            <netCoreApp:RenderControl Name="RenderControl" Height="200" Width="200"></netCoreApp:RenderControl>
         </StackPanel>
     
     </StackPanel>

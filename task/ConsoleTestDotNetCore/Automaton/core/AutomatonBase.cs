@@ -1,13 +1,13 @@
 namespace Automaton.core
 {
-    public class Automaton
+    public class AutomatonBase
     {
-        private Field _field;
+        private Field Field;
         public bool IsStarted { get; private set; }
 
-        public Automaton(int cols, int rows)
+        public AutomatonBase(int cols, int rows)
         {
-            _field = new Field(cols, rows);
+            Field = new Field(cols, rows);
         }
 
         public void Start()
@@ -24,17 +24,17 @@ namespace Automaton.core
 
         public Cell[][] NextGeneration()
         {
-            return IsStarted ? _field.NextGeneration() : _field.Data;
+            return IsStarted ? Field.NextGeneration() : Field.Data;
         }
 
         public Cell[][] Generate()
         {
-            return _field.Generate();
+            return Field.Generate();
         }
 
         public void SetCell(int x, int y, Cell c)
         {
-            _field.SetCell(x, y, c);
+            Field.SetCell(x, y, c);
         }
         
     }
