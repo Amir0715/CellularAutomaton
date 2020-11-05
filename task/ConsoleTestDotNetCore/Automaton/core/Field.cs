@@ -5,108 +5,135 @@ namespace Automaton.core
 {
     public class Field
     {
-        public Cell[][] Data { get; private set; }
-        public Func<Cell, Cell> transform { set; get; }
-        private TaskManager taskManager;
-        private int countOfCores;
-        private int columns;
-        private int rows;
+        public Cell[][] Data { get; set; }
+        private Func<Cell, Cell> Transform { set; get; }
+        private TaskManager TaskManager;
+        private int CountOfCores { get; set; }
+        private int Columns { get; set; }
+        private int Rows { get; set; }
 
-        public Field(int columns, int rows, Func<Cell, Cell> transform)
+        public Field(int cols, int rows, Func<Cell, Cell> transform) : this(cols, rows)
         {
-            this.rows = rows;
-            this.columns = columns;
-            this.transform = transform;
-            Data = new Cell[columns][];
-            for (int i = 0; i < columns; i++)
+            this.Transform = transform;
+        }
+
+        public Field(int cols, int rows)
+        {
+            if (cols < 0)
+            {
+                throw new RowsOrColumnsLessZeroException("Columns can't be less 0");
+            }else if (rows < 0)
+            {
+                throw new RowsOrColumnsLessZeroException("Rows can't be less 0");
+            }
+            this.Rows = rows;
+            this.Columns = cols;
+            Data = new Cell[cols][];
+            for (var i = 0; i < cols; i++)
             {
                 Data[i] = new Cell[rows];
-                for (int j = 0; j < rows; j++)
+                for (var j = 0; j < rows; j++)
                 {
                     Data[i][j] = new Cell();
                 }
             }
-            countOfCores = 4;
+            CountOfCores = 3;
         }
 
-        public Field(int columns, int rows)
+        public Cell[][] Generate()
         {
-            this.rows = rows;
-            this.columns = columns;
-            Data = new Cell[columns][];
-            for (int i = 0; i < columns; i++)
+            var r = new Random();
+            for (var i = 0; i < Columns; i++)
             {
-                Data[i] = new Cell[rows];
-                for (int j = 0; j < rows; j++)
+                for (var j = 0; j < Rows; j++)
                 {
-                    Data[i][j] = new Cell();
+                    //Data[i][j].Generate(r);
+                    Data[i][j] = new Cell{IsAlive = false};
+                    if (i == 1 & (j == 0 | j == 1 | j == 2))
+                    {
+                        Data[i][j] = new Cell{IsAlive = true};
+                    }
                 }
             }
-            countOfCores = 4;
-        }
 
-        public void Generate()
-        {
-            Random r = new Random();
-            for (int i = 0; i < columns; i++)
-            {
-                for (int j = 0; j < rows; j++)
-                {
-                    Data[i][j].Generate(r);
-                }
-            }
+            return Data;
         }
         
-        public void NextGeneration()
+        public Cell[][] NextGeneration()
         {
-            Cell[][] tmp = new Cell[columns][];
-            for (int i = 0; i < columns; i++)
+            var tmp = new Cell[Columns][];
+            for (var i = 0; i < Columns; i++)
             {
-                tmp[i] = new Cell[rows];
+                tmp[i] = new Cell[Rows];
             }
 
-            taskManager = new TaskManager();
-            int lengthOfOneRange = columns / countOfCores;
-
-            for (int i = 0; i < countOfCores; i++) {
-                int index_start = i * lengthOfOneRange;
-                int index_end = (i + 1) * lengthOfOneRange;
-                if (i == countOfCores - 1)
-                    taskManager.AddTask(new Task(() => NextGenerationCell(ref tmp, index_start, columns)));
-                else
-                    taskManager.AddTask(new Task(() => NextGenerationCell(ref tmp, index_start, index_end)));
-            }
-
-            taskManager.RunAll();
-            taskManager.WaitAll();
+            TaskManager = new TaskManager();
+            var lengthOfOneRange = Columns / CountOfCores;
             
+            for (var i = 0; i < CountOfCores; i++) {
+                var indexStart = i * lengthOfOneRange;
+                var indexEnd = (i + 1) * lengthOfOneRange;
+                TaskManager.AddTask(i == CountOfCores - 1
+                    ? new Task(() => UpdateNumbersOfNeigborsTask(indexStart, Columns))
+                    : new Task(() => UpdateNumbersOfNeigborsTask(indexStart, indexEnd)));
+            }
+            
+            TaskManager.RunAll();
+            TaskManager.WaitAll();
+            TaskManager.Clear();
+            
+            for (var i = 0; i < CountOfCores; i++) {
+                var indexStart = i * lengthOfOneRange;
+                var indexEnd = (i + 1) * lengthOfOneRange;
+                TaskManager.AddTask(i == CountOfCores - 1
+                    ? new Task(() => NextGenerationCell(ref tmp, indexStart, Columns))
+                    : new Task(() => NextGenerationCell(ref tmp, indexStart, indexEnd)));
+            }
+            
+            TaskManager.RunAll();
+            TaskManager.WaitAll();
+            TaskManager.Clear();
+            //NextGenerationCell(ref tmp, 0, 5);
             Data = tmp;
+            return Data;
         }
-
-
+        
         private void NextGenerationCell(ref Cell[][] tmp, int indexStart, int indexEnd)
         {
-            for (int i = indexStart; i < indexEnd; i++)
+            for (var i = indexStart; i < indexEnd; i++)
             {
-                for (int j = 0; j < rows; j++)
+                for (var j = 0; j < Rows; j++)
+                {
+                    
+                    tmp[i][j] = Data[i][j].Life();
+                }
+            }
+        }
+
+        private void UpdateNumbersOfNeigborsTask(int indexStart, int indexEnd)
+        {
+            for (var i = indexStart; i < indexEnd; i++)
+            {
+                for (var j = 0; j < Rows; j++)
                 {
                     UpdateNumbersOfNeigbors(i, j);
-                    tmp[i][j] = transform(Data[i][j]);
+                    
                 }
             }
         }
         
         private void UpdateNumbersOfNeigbors(int x , int y)
         {
-            int countOfNeigbors = 0;
-            for(int i = - 1; i <= 1; i++)
+            var countOfNeigbors = 0;
+            
+            for(var i = -1; i <= 1; i++)
             {
-                for (int j =  - 1 ; j <= 1; j++)
+                for (var j = -1 ; j <= 1; j++)
                 {
-                    var col = (x + i + columns) % columns;
-                    var row = (y + j + rows) % rows;
-
-                    if( ( (col != x ) && (row != y) ) && Data[col][row].IsAlive)
+                    var col = (x + i + Columns) % Columns;
+                    var row = (y + j + Rows) % Rows;
+                   
+                    if( ! ( (col == x ) && (row == y) ) && Data[col][row].IsAlive)
                     {
                         countOfNeigbors++;
                     }
@@ -115,5 +142,9 @@ namespace Automaton.core
             Data[x][y].NumberOfNeigbors = countOfNeigbors;
         }
 
+        public void SetCell(int x, int y, Cell c)
+        {
+            Data[x][y].IsAlive = !Data[x][y].IsAlive;
+        }
     }
 }
