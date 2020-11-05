@@ -51,13 +51,18 @@ namespace Avalonia.NETCoreApp
         {
             Frontend.GetInstance().Generate();
         }
+        
+        public void NextStepBtn_Click(object sender, RoutedEventArgs s)
+        {
+            Frontend.GetInstance().Generate();
+        }
 
         public void SetCellPointerPressed(object sender, RoutedEventArgs e)
         {
             var le = e as Avalonia.Input.PointerEventArgs;
             var position = le.GetPosition(StackPanel);
-            int x = (int) (position.X / 300);
-            int y = (int) (position.Y / 300);
+            int x = (int) (position.X / 200);
+            int y = (int) (position.Y / 200);
             Frontend.GetInstance().SetCell(x, y);
         }
         

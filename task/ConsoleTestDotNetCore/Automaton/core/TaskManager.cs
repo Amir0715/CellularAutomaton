@@ -42,17 +42,9 @@ namespace Automaton.core
             
         }
 
-        private void Clear()
+        public void Clear()
         {
-            if (Tasks.Count == 0)
-            {
-                throw new TasksSizeIsNullException("Size of task eq 0");
-            }
-            for (var i = 0; i < Tasks.Count; i++)
-            {
-                Tasks.Dequeue();
-            }
-            
+            Tasks.Clear();
         }
     }
 }

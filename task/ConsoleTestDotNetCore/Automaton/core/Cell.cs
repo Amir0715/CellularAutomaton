@@ -32,6 +32,8 @@
         {
             if (this.IsAlive)
             {
+                if (NumberOfNeigbors == 2 || NumberOfNeigbors == 3)
+                    IsAlive = true;
                 if (NumberOfNeigbors < 2 || NumberOfNeigbors > 3)
                     IsAlive = false;
             }

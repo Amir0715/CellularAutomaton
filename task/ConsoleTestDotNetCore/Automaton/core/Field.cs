@@ -37,7 +37,7 @@ namespace Automaton.core
                     Data[i][j] = new Cell();
                 }
             }
-            CountOfCores = 4;
+            CountOfCores = 3;
         }
 
         public Cell[][] Generate()
@@ -47,7 +47,12 @@ namespace Automaton.core
             {
                 for (var j = 0; j < Rows; j++)
                 {
-                    Data[i][j].Generate(r);
+                    //Data[i][j].Generate(r);
+                    Data[i][j] = new Cell{IsAlive = false};
+                    if (i == 1 & (j == 0 | j == 1 | j == 2))
+                    {
+                        Data[i][j] = new Cell{IsAlive = true};
+                    }
                 }
             }
 
@@ -64,7 +69,19 @@ namespace Automaton.core
 
             TaskManager = new TaskManager();
             var lengthOfOneRange = Columns / CountOfCores;
-
+            
+            for (var i = 0; i < CountOfCores; i++) {
+                var indexStart = i * lengthOfOneRange;
+                var indexEnd = (i + 1) * lengthOfOneRange;
+                TaskManager.AddTask(i == CountOfCores - 1
+                    ? new Task(() => UpdateNumbersOfNeigborsTask(indexStart, Columns))
+                    : new Task(() => UpdateNumbersOfNeigborsTask(indexStart, indexEnd)));
+            }
+            
+            TaskManager.RunAll();
+            TaskManager.WaitAll();
+            TaskManager.Clear();
+            
             for (var i = 0; i < CountOfCores; i++) {
                 var indexStart = i * lengthOfOneRange;
                 var indexEnd = (i + 1) * lengthOfOneRange;
@@ -72,10 +89,11 @@ namespace Automaton.core
                     ? new Task(() => NextGenerationCell(ref tmp, indexStart, Columns))
                     : new Task(() => NextGenerationCell(ref tmp, indexStart, indexEnd)));
             }
-
+            
             TaskManager.RunAll();
             TaskManager.WaitAll();
-            
+            TaskManager.Clear();
+            //NextGenerationCell(ref tmp, 0, 5);
             Data = tmp;
             return Data;
         }
@@ -86,8 +104,20 @@ namespace Automaton.core
             {
                 for (var j = 0; j < Rows; j++)
                 {
-                    UpdateNumbersOfNeigbors(i, j);
+                    
                     tmp[i][j] = Data[i][j].Life();
+                }
+            }
+        }
+
+        private void UpdateNumbersOfNeigborsTask(int indexStart, int indexEnd)
+        {
+            for (var i = indexStart; i < indexEnd; i++)
+            {
+                for (var j = 0; j < Rows; j++)
+                {
+                    UpdateNumbersOfNeigbors(i, j);
+                    
                 }
             }
         }
@@ -95,14 +125,15 @@ namespace Automaton.core
         private void UpdateNumbersOfNeigbors(int x , int y)
         {
             var countOfNeigbors = 0;
-            for(var i = - 1; i <= 1; i++)
+            
+            for(var i = -1; i <= 1; i++)
             {
-                for (var j =  - 1 ; j <= 1; j++)
+                for (var j = -1 ; j <= 1; j++)
                 {
                     var col = (x + i + Columns) % Columns;
                     var row = (y + j + Rows) % Rows;
-
-                    if( ( (col != x ) && (row != y) ) && Data[col][row].IsAlive)
+                   
+                    if( ! ( (col == x ) && (row == y) ) && Data[col][row].IsAlive)
                     {
                         countOfNeigbors++;
                     }

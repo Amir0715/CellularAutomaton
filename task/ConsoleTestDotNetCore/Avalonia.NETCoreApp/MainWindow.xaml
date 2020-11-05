@@ -8,15 +8,15 @@
         Title="Avalonia.NETCoreApp"
         WindowState="Maximized">
     
-    <StackPanel Orientation="Horizontal" Background="Red">
+    <StackPanel Orientation="Horizontal">
         <StackPanel Orientation="Vertical" Width="200" Background="Gray">
             <Button Name="StartBtn" Click="StartBtn_Click">Start</Button>
             <Button Name="StopBtn" Click="StopBtn_Click">Stop</Button>
+            <Button Name="NextStepBtn" Click="NextStepBtn_Click">Next step</Button>
             <Button Name="GenerateBtn" Click="GenerateBtn_Click">Generate</Button>
-            <Button Name="GreetButton" Click="GreetButton_Click">Say Hello!</Button>
         </StackPanel>
-        <StackPanel Name="RenderView" Background="Gray" Orientation="Vertical" Width="1668" Height="1016">
-            <netCoreApp:RenderControl Name="RenderControl" Height="200" Width="200"></netCoreApp:RenderControl>
+        <StackPanel Name="RenderView" Background="Gray" Width="1000" Height="1000">
+            <netCoreApp:RenderControl Name="RenderControl" Height="1000" Width="1000"></netCoreApp:RenderControl>
         </StackPanel>
     
     </StackPanel>

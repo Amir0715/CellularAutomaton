@@ -24,20 +24,20 @@ namespace Avalonia.NETCoreApp
 
         public RenderControl() : base()
         {
-            Resolution = 300;
-            Cols = (int) (1664/Resolution); 
-            Rows = (int) (1016/Resolution);
+            Resolution = 200;
+            Cols = (int) (1000/Resolution); 
+            Rows = (int) (1000/Resolution);
             _Frontend = Frontend.GetInstance(cols: Cols, rows: Rows);
-            _RenderOperation = new RenderOperation(new Rect(0, 0, 1664,1016),_Frontend,Cols,Rows, Resolution);
+            _RenderOperation = new RenderOperation(new Rect(0, 0, 1000,1000),_Frontend,Cols,Rows, Resolution);
         }
         
         public override void Render(DrawingContext context)
         {
             try
             {
-                this.Bounds = new Rect(new Point(0,0),new Size(1664, 1016));
+                this.Bounds = new Rect(new Point(0,0),new Size(1000, 1000));
                 
-                context.Custom(_RenderOperation);
+                    context.Custom(_RenderOperation);
                 
                 // При передаче котекста в другие методы не рисуется, мне кажется 
                 //DrawCells(Brushes.Red, context);
