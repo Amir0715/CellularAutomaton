@@ -15,8 +15,8 @@
             <Button Name="NextStepBtn" Click="NextStepBtn_Click">Next step</Button>
             <Button Name="GenerateBtn" Click="GenerateBtn_Click">Generate</Button>
         </StackPanel>
-        <StackPanel Name="RenderView" Background="Gray" Width="1000" Height="1000">
-            <netCoreApp:RenderControl Name="RenderControl" Height="1000" Width="1000"></netCoreApp:RenderControl>
+        <StackPanel Name="RenderView" Background="Gray">
+            <netCoreApp:RenderControl Name="RenderControl"></netCoreApp:RenderControl>
         </StackPanel>
     
     </StackPanel>

@@ -9,6 +9,7 @@ namespace Avalonia.NETCoreApp
     {
         private static MainWindow _window = new MainWindow();
         private StackPanel StackPanel;
+        private RenderControl RenderControl;
         private Frontend Frontend;
         public MainWindow()
         {
@@ -27,16 +28,14 @@ namespace Avalonia.NETCoreApp
         private void InitializeComponent()
         {
             AvaloniaXamlLoader.Load(this);
+
+            RenderControl = this.FindControl<RenderControl>("RenderControl");
+            
             StackPanel = this.FindControl<StackPanel>("RenderView");
             StackPanel.PointerPressed += SetCellPointerPressed;
             
         }
         
-        public void GreetButton_Click(object sender, RoutedEventArgs e)
-        {
-            Console.WriteLine(@"CLICK!" + sender + e);
-        }
-
         public void StartBtn_Click(object sender, RoutedEventArgs s)
         {
             Frontend.GetInstance().Start();
@@ -61,8 +60,8 @@ namespace Avalonia.NETCoreApp
         {
             var le = e as Avalonia.Input.PointerEventArgs;
             var position = le.GetPosition(StackPanel);
-            int x = (int) (position.X / 200);
-            int y = (int) (position.Y / 200);
+            int x = (int) (position.X / RenderControl.Resolution);
+            int y = (int) (position.Y / RenderControl.Resolution);
             Frontend.GetInstance().SetCell(x, y);
         }
         

@@ -7,41 +7,39 @@ using Avalonia.Platform;
 using Avalonia.Rendering.SceneGraph;
 using Avalonia.Threading;
 
+
+// TODO: timeout рендера 
 namespace Avalonia.NETCoreApp
 {
     public class RenderControl : Control
-    {   
-        
+    {
         private int Cols;
         private int Rows;
-        private int Resolution;
+        public int Resolution;
         private RenderOperation _RenderOperation;
         private Frontend _Frontend;
-        public RenderControl(Rect bounds) : this()
-        {
-            this.Bounds = bounds;
-        }
-
+        
         public RenderControl() : base()
         {
-            Resolution = 200;
-            Cols = (int) (1000/Resolution); 
-            Rows = (int) (1000/Resolution);
+            // TODO: придумать как перебрасывать размер и разрешение   
+            this.Resolution = 20;
+            this.Width = 1000;
+            this.Height = 1000;
+            
+            
+            Cols = (int) (this.Width/Resolution); 
+            Rows = (int) (this.Height/Resolution);
             _Frontend = Frontend.GetInstance(cols: Cols, rows: Rows);
-            _RenderOperation = new RenderOperation(new Rect(0, 0, 1000,1000),_Frontend,Cols,Rows, Resolution);
+            _RenderOperation = new RenderOperation(new Rect(0, 0, this.Width,this.Height),_Frontend,Cols,Rows, Resolution);
         }
         
         public override void Render(DrawingContext context)
         {
             try
             {
-                this.Bounds = new Rect(new Point(0,0),new Size(1000, 1000));
+                this.Bounds = new Rect(new Point(0,0),new Size(this.Width, this.Height));
                 
-                    context.Custom(_RenderOperation);
-                
-                // При передаче котекста в другие методы не рисуется, мне кажется 
-                //DrawCells(Brushes.Red, context);
-                //DrawGrid(Brushes.Black, ref context);
+                context.Custom(_RenderOperation);
                 
                 // не совсем понятно чем отличается IvokeAsync и Post, мне кажется порядком вызова
                 Dispatcher.UIThread.InvokeAsync(InvalidateVisual, DispatcherPriority.Background);
@@ -56,12 +54,8 @@ namespace Avalonia.NETCoreApp
             }
         }
         
-        
-
-
         public class RenderOperation : ICustomDrawOperation
         {
-
             private double Resolution;
             private Frontend Frontend;
             private int Rows;
