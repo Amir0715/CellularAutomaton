@@ -47,15 +47,9 @@ namespace Automaton.core
             {
                 for (var j = 0; j < Rows; j++)
                 {
-                    //Data[i][j].Generate(r);
-                    Data[i][j] = new Cell{IsAlive = false};
-                    if (i == 1 & (j == 0 | j == 1 | j == 2))
-                    {
-                        Data[i][j] = new Cell{IsAlive = true};
-                    }
+                    Data[i][j].Generate(r);
                 }
             }
-
             return Data;
         }
         

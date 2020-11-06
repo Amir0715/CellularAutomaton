@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Avalonia.NETCoreApp", "Aval
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Automaton", "Automaton\Automaton.csproj", "{960DE256-A24C-40AA-BA2C-F73A3F5CD01A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Automaton.Test", "Automaton.Test\Automaton.Test.csproj", "{2D4D361A-CD40-484B-8EC2-4BB910570282}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{960DE256-A24C-40AA-BA2C-F73A3F5CD01A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{960DE256-A24C-40AA-BA2C-F73A3F5CD01A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{960DE256-A24C-40AA-BA2C-F73A3F5CD01A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D4D361A-CD40-484B-8EC2-4BB910570282}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D4D361A-CD40-484B-8EC2-4BB910570282}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D4D361A-CD40-484B-8EC2-4BB910570282}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D4D361A-CD40-484B-8EC2-4BB910570282}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
