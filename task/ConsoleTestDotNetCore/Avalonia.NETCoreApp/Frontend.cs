@@ -4,7 +4,7 @@ namespace Avalonia.NETCoreApp
 {
     public class Frontend
     {
-        private AutomatonBase Automaton ;
+        private AutomatonBase Automaton;
         private static Frontend _instance;
         public Cell[][] Data { get; private set; }
         private Frontend(int cols, int rows)

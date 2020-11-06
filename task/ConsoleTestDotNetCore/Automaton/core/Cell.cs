@@ -4,8 +4,8 @@
 {
     public class Cell
     {
-        private float Value { get; set; }
-        public int NumberOfNeigbors { get; set; }
+        public float Value { get; set; }
+        public int NumberOfNeighbors { get; set; }
         public bool IsAlive { get; set; }
 
         public void Generate(Random r)
@@ -32,14 +32,14 @@
         {
             if (this.IsAlive)
             {
-                if (NumberOfNeigbors == 2 || NumberOfNeigbors == 3)
+                if (NumberOfNeighbors == 2 || NumberOfNeighbors == 3)
                     IsAlive = true;
-                if (NumberOfNeigbors < 2 || NumberOfNeigbors > 3)
+                if (NumberOfNeighbors < 2 || NumberOfNeighbors > 3)
                     IsAlive = false;
             }
             else
             {
-                if (NumberOfNeigbors == 3)
+                if (NumberOfNeighbors == 3)
                     IsAlive = true;
             }
             return this;

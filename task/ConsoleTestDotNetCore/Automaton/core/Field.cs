@@ -133,7 +133,7 @@ namespace Automaton.core
                     }
                 }
             }
-            Data[x][y].NumberOfNeigbors = countOfNeigbors;
+            Data[x][y].NumberOfNeighbors = countOfNeigbors;
         }
 
         public void SetCell(int x, int y, Cell c)
