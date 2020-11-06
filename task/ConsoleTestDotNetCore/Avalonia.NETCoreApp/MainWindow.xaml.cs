@@ -53,7 +53,7 @@ namespace Avalonia.NETCoreApp
         
         public void NextStepBtn_Click(object sender, RoutedEventArgs s)
         {
-            Frontend.GetInstance().Generate();
+            Frontend.GetInstance().NextStep();
         }
 
         public void SetCellPointerPressed(object sender, RoutedEventArgs e)

@@ -6,12 +6,10 @@ namespace Avalonia.NETCoreApp
     {
         private AutomatonBase Automaton ;
         private static Frontend _instance;
-        private int NumberOfGeneration;
+        public Cell[][] Data { get; private set; }
         private Frontend(int cols, int rows)
         {
-            NumberOfGeneration = 0;
             Automaton = new AutomatonBase(cols,rows);
-            
             Generate();
         }
 
@@ -30,15 +28,21 @@ namespace Avalonia.NETCoreApp
             Automaton.Stop();
         }
         
-        public Cell[][] GetNextGeneration()
+        public void NextGeneration()
         {
-            NumberOfGeneration++;
-            return Automaton.NextGeneration();
+            Data = Automaton.NextGeneration();
         }
 
-        public Cell[][] Generate()
+        public void NextStep()
         {
-            return Automaton.Generate();
+            Start();
+            NextGeneration();   
+            Stop();
+        }
+
+        public void Generate()
+        {
+            Data =  Automaton.Generate();
         }
 
         public void SetCell(int x, int y)

@@ -89,8 +89,8 @@ namespace Avalonia.NETCoreApp
                 {
                     context.FillRectangle(BackgroundColor, Bounds);
                     
-                    Data = Frontend.GetNextGeneration();
-                    
+                    Frontend.NextGeneration();
+                    Data = Frontend.Data;
                     DrawCells(CellColor, context);
                     DrawGrid(GridColor, context);
                 }
