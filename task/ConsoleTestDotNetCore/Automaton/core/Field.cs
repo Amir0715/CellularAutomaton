@@ -37,7 +37,7 @@ namespace Automaton.core
                     Data[i][j] = new Cell();
                 }
             }
-            CountOfCores = 3;
+            CountOfCores = 4;
         }
 
         public Cell[][] Generate()
@@ -68,8 +68,8 @@ namespace Automaton.core
                 var indexStart = i * lengthOfOneRange;
                 var indexEnd = (i + 1) * lengthOfOneRange;
                 TaskManager.AddTask(i == CountOfCores - 1
-                    ? new Task(() => UpdateNumbersOfNeigborsTask(indexStart, Columns))
-                    : new Task(() => UpdateNumbersOfNeigborsTask(indexStart, indexEnd)));
+                    ? new Task(() => UpdateNumbersOfNeighborsTask(indexStart, Columns))
+                    : new Task(() => UpdateNumbersOfNeighborsTask(indexStart, indexEnd)));
             }
             
             TaskManager.RunAll();
@@ -87,7 +87,6 @@ namespace Automaton.core
             TaskManager.RunAll();
             TaskManager.WaitAll();
             TaskManager.Clear();
-            //NextGenerationCell(ref tmp, 0, 5);
             Data = tmp;
             return Data;
         }
@@ -104,21 +103,20 @@ namespace Automaton.core
             }
         }
 
-        private void UpdateNumbersOfNeigborsTask(int indexStart, int indexEnd)
+        private void UpdateNumbersOfNeighborsTask(int indexStart, int indexEnd)
         {
             for (var i = indexStart; i < indexEnd; i++)
             {
                 for (var j = 0; j < Rows; j++)
                 {
-                    UpdateNumbersOfNeigbors(i, j);
-                    
+                    UpdateNumbersOfNeighbors(i, j);
                 }
             }
         }
         
-        private void UpdateNumbersOfNeigbors(int x , int y)
+        private void UpdateNumbersOfNeighbors(int x , int y)
         {
-            var countOfNeigbors = 0;
+            var countOfNeighbors = 0;
             
             for(var i = -1; i <= 1; i++)
             {
@@ -129,14 +127,14 @@ namespace Automaton.core
                    
                     if( ! ( (col == x ) && (row == y) ) && Data[col][row].IsAlive)
                     {
-                        countOfNeigbors++;
+                        countOfNeighbors++;
                     }
                 }
             }
-            Data[x][y].NumberOfNeighbors = countOfNeigbors;
+            Data[x][y].NumberOfNeighbors = countOfNeighbors;
         }
 
-        public void SetCell(int x, int y, Cell c)
+        public void SetCell(int x, int y)
         {
             Data[x][y].IsAlive = !Data[x][y].IsAlive;
         }

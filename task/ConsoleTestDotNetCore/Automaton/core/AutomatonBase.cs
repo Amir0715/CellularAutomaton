@@ -32,9 +32,9 @@ namespace Automaton.core
             return Field.Generate();
         }
 
-        public void SetCell(int x, int y, Cell c)
+        public void SetCell(int x, int y)
         {
-            Field.SetCell(x, y, c);
+            Field.SetCell(x, y);
         }
         
     }

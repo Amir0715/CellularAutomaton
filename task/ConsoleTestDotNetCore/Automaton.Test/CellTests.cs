@@ -6,30 +6,6 @@ namespace Automaton.Test
 {
     public class CellTests
     {
-
-        [Fact]
-        public void TestCell()
-        {
-            Assert.NotSame(new Cell(), new Cell());
-        }
-        
-        [Theory]
-        [InlineData(true)]
-        [InlineData(false)]
-        public void TestIsAlive(bool value)
-        {
-            var cell = new Cell {IsAlive = value};
-            Assert.NotNull(cell);
-            Assert.Equal(cell.IsAlive, value);
-        }
-
-        [Fact]
-        public void TestValue()
-        {
-            var cell = new Cell {Value = 100};
-            Assert.Equal(cell.Value, 100);
-        }
-
         [Fact]
         public void TestGenerate()
         {
@@ -81,11 +57,11 @@ namespace Automaton.Test
         [InlineData(true, 2, true)]
         [InlineData(true, 3, true)]
         [InlineData(true, 4, false)]
-        [InlineData(false, 0,false)]
-        [InlineData(false, 1,false)]
-        [InlineData(false, 2,false)]
-        [InlineData(false, 3,true)]
-        [InlineData(false, 4,false)]
+        [InlineData(false, 0, false)]
+        [InlineData(false, 1, false)]
+        [InlineData(false, 2, false)]
+        [InlineData(false, 3, true)]
+        [InlineData(false, 4, false)]
         public void TestLife(object alive, object numbers, object expected)
         {
             var cell = new Cell() {NumberOfNeighbors = (int)numbers, IsAlive = (bool)alive};

@@ -47,7 +47,7 @@ namespace Avalonia.NETCoreApp
 
         public void SetCell(int x, int y)
         {
-            Automaton.SetCell(x,y, new Cell());
+            Automaton.SetCell(x,y);
         }
     }
 }
