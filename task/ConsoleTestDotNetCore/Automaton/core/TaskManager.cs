@@ -4,11 +4,10 @@ using System.Threading.Tasks;
 namespace Automaton.core
 {
     // TODO : statistics
-    class TaskManager
+    public class TaskManager
     {
         private Queue<Task> Tasks;
         
-
         public TaskManager()
         {
             Tasks = new Queue<Task>();

@@ -14,7 +14,7 @@ namespace Automaton.core
 
         public Field(int cols, int rows, Func<Cell, Cell> transform) : this(cols, rows)
         {
-            this.Transform = transform;
+            Transform = transform;
         }
 
         public Field(int cols, int rows)
@@ -22,12 +22,13 @@ namespace Automaton.core
             if (cols < 0)
             {
                 throw new RowsOrColumnsLessZeroException("Columns can't be less 0");
-            }else if (rows < 0)
+            }
+            if (rows < 0)
             {
                 throw new RowsOrColumnsLessZeroException("Rows can't be less 0");
             }
-            this.Rows = rows;
-            this.Columns = cols;
+            Rows = rows;
+            Columns = cols;
             Data = new Cell[cols][];
             for (var i = 0; i < cols; i++)
             {
