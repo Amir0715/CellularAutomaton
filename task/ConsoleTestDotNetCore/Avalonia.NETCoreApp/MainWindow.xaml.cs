@@ -10,7 +10,6 @@ namespace Avalonia.NETCoreApp
         private static MainWindow _window = new MainWindow();
         private StackPanel StackPanel;
         private RenderControl RenderControl;
-        private Frontend Frontend;
         public MainWindow()
         {
             InitializeComponent();

@@ -6,6 +6,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Automaton", "Automaton\Auto
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Automaton.Test", "Automaton.Test\Automaton.Test.csproj", "{2D4D361A-CD40-484B-8EC2-4BB910570282}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gRPCManager", "gRPCManager\gRPCManager.csproj", "{58EAA216-D808-4174-8018-42F8624D1253}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gRPCClient", "gRPCClient\gRPCClient.csproj", "{68955AA7-31CC-4DAE-9E79-EB275359E793}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +28,13 @@ Global
 		{2D4D361A-CD40-484B-8EC2-4BB910570282}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2D4D361A-CD40-484B-8EC2-4BB910570282}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2D4D361A-CD40-484B-8EC2-4BB910570282}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58EAA216-D808-4174-8018-42F8624D1253}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58EAA216-D808-4174-8018-42F8624D1253}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58EAA216-D808-4174-8018-42F8624D1253}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58EAA216-D808-4174-8018-42F8624D1253}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68955AA7-31CC-4DAE-9E79-EB275359E793}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68955AA7-31CC-4DAE-9E79-EB275359E793}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68955AA7-31CC-4DAE-9E79-EB275359E793}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68955AA7-31CC-4DAE-9E79-EB275359E793}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

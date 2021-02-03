@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Automaton.core;
 using Avalonia.Controls;
 using Avalonia.Media;
@@ -110,7 +111,7 @@ namespace Avalonia.NETCoreApp
                 var pixel = new Rect(new Point(point.X * Resolution, point.Y * Resolution), new Size( Resolution, Resolution));
                 context.FillRectangle(brush, pixel);
             }
-
+            
             private void DrawGrid(IBrush brush, IDrawingContextImpl context)
             {
                 for (var i = 0; i <= Cols; i++)

@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+option csharp_namespace = "gRPCClient";
+
+service Client {
+  rpc NextGeneration(UploadData) returns(DownloadData);
+  rpc Test(test) returns(test);
+}
+
+message test{
+  string Data = 1;
+}
+
+message Cell{
+  float Value = 1;
+  int32 NumberOfNeighbors = 2;
+  bool IsAlive = 3;
+}
+
+message UploadData{
+  repeated Cell Data = 1;
+}
+
+message DownloadData{
+  repeated Cell Data = 1;
+}
