@@ -10,8 +10,8 @@
         <AvaloniaResource Include="**\*.xaml">
             <SubType>Designer</SubType>
         </AvaloniaResource>
-        <Protobuf Include="..\Protos\greet.proto" GrpcServices="Client"/>
-        <Protobuf Include="..\Protos\Client.proto" GrpcServices="Client"/>
+        <Protobuf Include="..\Protos\greet.proto" GrpcServices="Client" />
+        <Protobuf Include="..\Protos\Client.proto" GrpcServices="Client" />
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="Avalonia" Version="0.9.12" />

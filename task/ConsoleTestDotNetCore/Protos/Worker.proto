@@ -1,1 +1,10 @@
 syntax = "proto3";
+
+service Worker{
+  rpc Test(test) returns(test);
+}
+
+message test
+{
+  string data = 1; 
+}

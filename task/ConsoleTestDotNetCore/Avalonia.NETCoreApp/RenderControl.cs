@@ -61,7 +61,7 @@ namespace Avalonia.NETCoreApp
             private Frontend Frontend;
             private int Rows;
             private int Cols;
-            private Cell[][] Data;
+            private Cells Data;
             private double Height;
             private double Width;
 
@@ -126,7 +126,7 @@ namespace Avalonia.NETCoreApp
 
             private void DrawCells(IBrush brush, IDrawingContextImpl context)
             {
-                for (var i = 0; i < Data.Length; i++)
+                for (var i = 0; i < Data.Length(); i++)
                 {
                     for (var j = 0; j < Data[0].Length; j++)
                     {
