@@ -11,18 +11,6 @@ namespace Avalonia.NETCoreApp
         // yet and stuff might break.
         public static async Task Main(string[] args)
         {
-            // AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", isEnabled: true);
-            // using var channel = GrpcChannel.ForAddress("http://localhost:5001", new GrpcChannelOptions()
-            // {
-            //     Credentials = ChannelCredentials.Insecure,
-            //     LoggerFactory = new NullLoggerFactory()
-            // });
-            // var client = new Greeter.GreeterClient(channel);
-            // Console.Write("Введите имя: ");
-            // string name = Console.ReadLine();
-            // // обмениваемся сообщениями с сервером
-            // var reply = await client.SayHelloAsync(new HelloRequest { Name = name });
-            // Console.WriteLine("Ответ сервера: " + reply.Message);
             try
             {
                 BuildAvaloniaApp()

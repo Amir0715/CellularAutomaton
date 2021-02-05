@@ -1,3 +1,5 @@
+
+
 namespace Automaton.core
 {
     public class AutomatonBase
@@ -8,28 +10,23 @@ namespace Automaton.core
         public AutomatonBase(int cols, int rows)
         {
             Field = new Field(cols, rows);
+            IsStarted = false;
         }
 
-        public void Start()
+        public bool ChangeStatus()
         {
-            if (!IsStarted)
-                IsStarted = true;
+            IsStarted = !IsStarted;
+            return IsStarted;
+        }
+        
+        public Cells NextGeneration()
+        {
+            return IsStarted ? new Cells(Field.NextGeneration()) : new Cells(Field.Data);
         }
 
-        public void Stop()
+        public Cells Generate()
         {
-            if (IsStarted)
-                IsStarted = false;
-        }
-
-        public Cell[][] NextGeneration()
-        {
-            return IsStarted ? Field.NextGeneration() : Field.Data;
-        }
-
-        public Cell[][] Generate()
-        {
-            return Field.Generate();
+            return new Cells(Field.Generate());
         }
 
         public void SetCell(int x, int y)

@@ -10,14 +10,14 @@
         <AvaloniaResource Include="**\*.xaml">
             <SubType>Designer</SubType>
         </AvaloniaResource>
-        <Protobuf Include="..\Protos\greet.proto" GrpcServices="Client" />
         <Protobuf Include="..\Protos\Client.proto" GrpcServices="Client" />
+        <Protobuf Include="..\Protos\Structures.proto" />
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="Avalonia" Version="0.9.12" />
         <PackageReference Include="Avalonia.Desktop" Version="0.9.12" />
         <PackageReference Include="Google.Protobuf" Version="3.14.0" />
-        <PackageReference Include="Grpc.Net.Client" Version="2.34.0" />
+        <PackageReference Include="Grpc.Net.Client" Version="2.35.0" />
         <PackageReference Include="Grpc.Tools" Version="2.35.0">
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+option csharp_namespace = "gRPCStructures";
+
+message Cells
+{
+  repeated RowCell Data = 1;
+
+  message RowCell{
+    repeated Cell Data = 1;
+
+    message Cell{
+      float Value = 1;
+      int32 NumberOfNeighbors = 2;
+      bool IsAlive = 3;
+    }
+  }
+}
+
+message test{
+  string Data = 1;
+}
+
+message Size{
+  int32 cols = 1;
+  int32 rows = 2;
+}
+
+// можно передовать пустой объект
+message Status{ // 1 - работает, 0 - нет
+  bool Data = 1;
+}

@@ -1,44 +1,11 @@
 syntax = "proto3";
+import "Structures.proto";
 
 option csharp_namespace = "gRPCClient";
 
 service Client {
-  rpc NextGeneration(Cells) returns(Cells);
-  rpc Generate(Cells) returns(Cells);
   rpc Test(test) returns(test);
-  rpc TestCells(Cells) returns(test);
-  rpc SetCell(SetCellT) returns(SetCellT);
-}
-
-message Cells
-{
-  repeated RowCell Data = 1;
-  
-  message RowCell{
-    repeated Cell Data = 1;
-
-    message Cell{
-      float Value = 1;
-      int32 NumberOfNeighbors = 2;
-      bool IsAlive = 3;
-    }
-  }
-}
-
-message test{
-  string Data = 1;
-}
-
-message SetCellT{
-  int32 x = 1;
-  int32 y = 2;
-  Cells data = 3;
-}
-
-message UploadData{
-  Cells Data = 1;
-}
-
-message DownloadData{
-  Cells Data = 1;
+  rpc Generate(Size) returns(Cells);
+  rpc NextGeneration(Cells) returns(Cells);
+  rpc ChangeStatus(Status) returns(Status);
 }

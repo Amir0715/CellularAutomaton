@@ -1,10 +1,11 @@
 syntax = "proto3";
+import "Structures.proto";
+
+option csharp_namespace = "gRPCWorker";
 
 service Worker{
   rpc Test(test) returns(test);
-}
-
-message test
-{
-  string data = 1; 
+  rpc Generate(Size) returns(Cells);
+  rpc NextGeneration(Cells) returns(Cells);
+  rpc ChangeStatus(Status) returns(Status);
 }
