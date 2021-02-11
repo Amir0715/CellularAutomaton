@@ -4,7 +4,6 @@ using Automaton.core;
 using Grpc.Core;
 using Grpc.Net.Client;
 using gRPCClient;
-using gRPCStructures;
 using Microsoft.Extensions.Logging.Abstractions;
 using Cells = Automaton.core.Cells;
 using Status = gRPCStructures.Status;

@@ -40,7 +40,7 @@ namespace gRPCManager
         public gRPCStructures.Cells Generate(Size request)
         {
             var result = new Cells();
-            var step = (int) request.Rows / WorkerClients.Count;
+            var step = request.Rows / WorkerClients.Count;
             var size = new Size {Cols = request.Cols, Rows = step};
             for (var i = 0; i < WorkerClients.Count-1; i++)
             {
@@ -56,6 +56,34 @@ namespace gRPCManager
                 size.Rows = request.Rows % WorkerClients.Count;
                 result += GCellsToCells(WorkerClients[^1].Generate(size));
             }
+            return CellsToGCells(result);
+        }
+
+        public gRPCStructures.Cells NextGeneration(gRPCStructures.Cells request)
+        {
+            var cells = GCellsToCells(request);
+            var step = cells.Data.GetLength(0) / WorkerClients.Count;
+            var result = new Cells();
+            var start = 0;
+            var end = step;
+            for (var i = 0; i < WorkerClients.Count - 1; i++)
+            {
+                var gcell = CellsToGCells(cells.GetFromTo(start, end));
+                result += GCellsToCells(WorkerClients[i].NextGeneration(gcell));
+                start += step;
+                end += step;
+            }
+            if (WorkerClients.Count == 1)
+            {
+                var gcell = CellsToGCells(cells.GetFromTo(start, end));
+                result = GCellsToCells(WorkerClients[^1].NextGeneration(gcell));
+            }
+            else
+            {
+                var gcell = CellsToGCells(cells.GetFromTo(start, cells.Data.GetLength(0)));
+                result += GCellsToCells(WorkerClients[^1].NextGeneration(gcell));
+            }
+
             return CellsToGCells(result);
         }
         

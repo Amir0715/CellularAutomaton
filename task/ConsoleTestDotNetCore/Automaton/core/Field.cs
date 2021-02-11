@@ -98,7 +98,6 @@ namespace Automaton.core
             {
                 for (var j = 0; j < Rows; j++)
                 {
-                    
                     tmp[i][j] = Data[i][j].Life();
                 }
             }
@@ -123,9 +122,13 @@ namespace Automaton.core
             {
                 for (var j = -1 ; j <= 1; j++)
                 {
-                    var col = (x + i + Columns) % Columns;
-                    var row = (y + j + Rows) % Rows;
-                   
+                    var col = Math.Abs(x + i) ;
+                    var row = Math.Abs(y + j);
+                    if (col >= Columns)
+                        col = Columns-1;
+                    if (row >= Rows)
+                        row = Rows-1;
+                    
                     if( ! ( (col == x ) && (row == y) ) && Data[col][row].IsAlive)
                     {
                         countOfNeighbors++;

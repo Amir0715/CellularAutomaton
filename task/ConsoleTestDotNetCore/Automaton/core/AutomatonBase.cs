@@ -1,5 +1,3 @@
-using System;
-
 namespace Automaton.core
 {
     public class AutomatonBase

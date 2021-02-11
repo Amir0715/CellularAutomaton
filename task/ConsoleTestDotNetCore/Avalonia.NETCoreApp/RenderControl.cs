@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics.CodeAnalysis;
 using Automaton.core;
 using Avalonia.Controls;
 using Avalonia.Media;

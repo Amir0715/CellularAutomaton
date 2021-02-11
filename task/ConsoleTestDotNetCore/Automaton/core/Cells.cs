@@ -57,7 +57,7 @@ namespace Automaton.core
 
         public Cell SetCell(int x, int y)
         {
-            Cell c = Data[x][y];
+            var c = Data[x][y];
             this.Data[x][y] = new Cell {IsAlive = !c.IsAlive, Value = c.Value, NumberOfNeighbors = c.NumberOfNeighbors};
             return this.Data[x][y];
         }
@@ -68,6 +68,17 @@ namespace Automaton.core
             get { return Data[i]; }
         }
 
+        public Cells GetFromTo(int irow, int jrow)
+        {
+            var result = new Cells(rows:jrow-irow, cols:this.Data.Length);
+            for (var i = 0; i < jrow - irow; i++)
+            {
+                result.Data[i] = this.Data[i];
+            }
+
+            return result;
+        }
+        
         public static Cells operator +(Cells c1, Cells c2)
         {
             var cols1 = c1.Data.GetLength(0);
@@ -113,8 +124,6 @@ namespace Automaton.core
             }
             return result;
         }
-        
-        
         
         public static gRPCStructures.Cells CellsToGCells(Cells param)
         {

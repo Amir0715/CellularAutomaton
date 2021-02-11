@@ -26,7 +26,7 @@ namespace gRPCWorker.Services
         public override Task<test> Test(test request, ServerCallContext context)
         {
             _logger.Log(LogLevel.Information,$"Worker receive the {request}");
-            return Task.FromResult(new test{Data = "From worker"});
+            return Task.FromResult(new test {Data = "From worker"});
         }
         
         public override Task<gRPCStructures.Cells> Generate(Size request, ServerCallContext context)

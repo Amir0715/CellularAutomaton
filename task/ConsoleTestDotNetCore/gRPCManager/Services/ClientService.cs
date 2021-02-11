@@ -1,13 +1,9 @@
-using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Grpc.Core;
-using Grpc.Net.Client;
 using gRPCClient;
 using gRPCStructures;
 using gRPCWorker;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Abstractions;
 using Status = gRPCStructures.Status;
 
 namespace gRPCManager.Services
@@ -40,7 +36,7 @@ namespace gRPCManager.Services
 
         public override Task<Cells> NextGeneration(Cells request, ServerCallContext context)
         {
-            return Task.FromResult(manager.WorkerClients[0].NextGeneration(request));
+            return Task.FromResult(manager.NextGeneration(request));
         }
 
         public override Task<Status> ChangeStatus(Status request, ServerCallContext context)
