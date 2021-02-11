@@ -14,14 +14,13 @@ namespace Avalonia.NETCoreApp
 {
     public class Frontend
     {
-        // private AutomatonBase Automaton;
         private static Frontend _instance;
         private Client.ClientClient client; // клиент который будет связан с manager
         private GrpcChannel Channel; // канал для связи 
         public Cells Data;
         private int rows;
         private int cols;
-        private bool IsStarted;
+        private bool IsStarted = false;
 
         private Frontend(int cols, int rows)
         {
@@ -54,51 +53,40 @@ namespace Avalonia.NETCoreApp
             return _instance ??= new Frontend(cols, rows);
         }
 
-        public void Start()
+        public void ChangeStatus()
         {
             client.ChangeStatus(new Status
             {
-                Data = true
+                Data = !this.IsStarted
             });
+            this.IsStarted = !this.IsStarted;
         }
-
-        public void Stop()
-        {
-            client.ChangeStatus(new Status
-            {
-                Data = false
-            });
-        }
-
+        
         public void NextGeneration()
         {
-            if (IsStarted)
-            {
-                var call = client.NextGeneration(CellsToGCells(Data));
-                var recv = call;
-                Data = GCellsToCells(recv);
-            }
+            if (!IsStarted) return;
+            var call = client.NextGeneration(CellsToGCells(Data));
+            var recv = call;
+            Data = GCellsToCells(recv);
         }
 
         public void NextStep()
         {
-            IsStarted = true;
+            if (IsStarted) return;
+            ChangeStatus();
             NextGeneration();
-            IsStarted = false;
-            
+            ChangeStatus();
         }
 
         public void Generate()
         {
-            // Data.Update(Automaton.Generate());
-            var call = client.Generate(
+            var recv = client.Generate(
                 new gRPCStructures.Size
                 {
                     Cols = cols,
                     Rows = rows
                 }
             );
-            var recv = call;
             Data.Update(GCellsToCells(recv));
         }
         
@@ -106,6 +94,14 @@ namespace Avalonia.NETCoreApp
         {
             if (!IsStarted)
                 Data.SetCell(x, y);
+        }
+
+        public void Clear()
+        {
+            if (!IsStarted)
+            {
+                Data = new Cells(this.cols, this.rows);
+            }
         }
         
         // иначе ругается на разные типы, т.к. Cells определен в Automaton
@@ -150,7 +146,6 @@ namespace Avalonia.NETCoreApp
                         Value = y.Value
                     };
                 }
-
                 i++;
                 j = 0;
             }

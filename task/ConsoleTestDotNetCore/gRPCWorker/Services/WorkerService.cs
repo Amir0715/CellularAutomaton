@@ -7,12 +7,14 @@ using Microsoft.Extensions.Logging;
 using Cells = Automaton.core.Cells;
 using Status = gRPCStructures.Status;
 
+// Класс воркера -- объект который должен проводить вычесления 
 namespace gRPCWorker.Services
 {
     public class WorkerService : Worker.WorkerBase
     {
         private readonly ILogger<WorkerService> _logger;
-        private AutomatonBase Automaton;
+        private AutomatonBase AutomatonObj;
+        private object locker = new object();
         private int cols;
         private int rows;
         
@@ -31,19 +33,36 @@ namespace gRPCWorker.Services
         {
             this.cols = request.Cols;
             this.rows = request.Rows;
-            Automaton = new AutomatonBase(this.cols, this.rows);
+            Cells res;
+            lock (locker)
+            {
+                AutomatonObj = AutomatonBase.GetInstance(cols, rows);
+                res = AutomatonObj.Generate();
+            }
 
-            return Task.FromResult(CellsToGCells(Automaton.Generate()));
+            return Task.FromResult(CellsToGCells(res));
         }
 
         public override Task<Status> ChangeStatus(Status request, ServerCallContext context)
         {
-            return Task.FromResult(new Status{Data = Automaton.ChangeStatus()});
+            bool res;
+            lock (locker)
+            {
+                AutomatonObj = AutomatonBase.GetInstance();
+                res = AutomatonObj.ChangeStatus();
+            }
+            return Task.FromResult(new Status{Data = res});
         }
 
         public override Task<gRPCStructures.Cells> NextGeneration(gRPCStructures.Cells request, ServerCallContext context)
         {
-            var res = Automaton.NextGeneration();
+            Cells res;
+            lock (locker)
+            {
+                AutomatonObj = AutomatonBase.GetInstance();
+                res = GCellsToCells(request);
+                res = AutomatonObj.NextGeneration(res);
+            }
             return Task.FromResult(CellsToGCells(res));
         }
 
@@ -79,7 +98,7 @@ namespace gRPCWorker.Services
             Cell[][] data = new Cell[c.Data.Count][];
             foreach (var x in c.Data)
             {
-                data[i++] = new Cell[x.Data.Count];
+                data[i] = new Cell[x.Data.Count];
                 foreach (var y in x.Data)
                 {
                     data[i][j++] = new Cell
@@ -89,8 +108,8 @@ namespace gRPCWorker.Services
                         Value = y.Value
                     };
                 }
-
                 j = 0;
+                i++;
             }
 
             return new Cells(data);

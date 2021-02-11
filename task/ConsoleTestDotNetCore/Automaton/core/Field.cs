@@ -139,5 +139,20 @@ namespace Automaton.core
         {
             Data[x][y].IsAlive = !Data[x][y].IsAlive;
         }
+
+        public Cell[][] Clear()
+        {
+            Data = new Cell[this.Columns][];
+            for (var i = 0; i < this.Columns; i++)
+            {
+                Data[i] = new Cell[this.Rows];
+                for (var j = 0; j < this.Rows; j++)
+                {
+                    Data[i][j] = new Cell();
+                }
+            }
+
+            return Data;
+        }
     }
 }

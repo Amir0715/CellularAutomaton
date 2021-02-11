@@ -35,16 +35,6 @@ namespace Avalonia.NETCoreApp
             
         }
         
-        public void StartBtn_Click(object sender, RoutedEventArgs s)
-        {
-            Frontend.GetInstance().Start();
-        }
-
-        public void StopBtn_Click(object sender, RoutedEventArgs s)
-        {
-            Frontend.GetInstance().Stop();
-        }
-
         public void GenerateBtn_Click(object sender, RoutedEventArgs s)
         {
             Frontend.GetInstance().Generate();
@@ -63,6 +53,17 @@ namespace Avalonia.NETCoreApp
             int y = (int) (position.Y / RenderControl.Resolution);
             Frontend.GetInstance().SetCell(x, y);
         }
+
+        private void ChangeStatus_Click(object? sender, RoutedEventArgs e)
+        {
+            Frontend.GetInstance().ChangeStatus();
+        }
+
+        private void Clear_OnClick(object? sender, RoutedEventArgs e)
+        {
+            Frontend.GetInstance().Clear();
+        }
+        
         
     }
     

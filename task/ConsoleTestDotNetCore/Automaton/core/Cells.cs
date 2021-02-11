@@ -20,6 +20,19 @@ namespace Automaton.core
         {
         }
 
+        public Cells(int cols, int rows)
+        {
+            Data = new Cell[cols][];
+            for (var i = 0; i < cols; i++)
+            {
+                Data[i] = new Cell[rows];
+                for (var j = 0; j < rows; j++)
+                {
+                    Data[i][j] = new Cell();
+                }
+            }
+        }
+        
         public void Update(Cell[][] data)
         {
             this.Data = data;
@@ -54,7 +67,7 @@ namespace Automaton.core
         {
             get { return Data[i]; }
         }
-
+        
         public static gRPCStructures.Cells CellsToGCells(Cells param)
         {
             var rows = new List<gRPCStructures.Cells.Types.RowCell>();

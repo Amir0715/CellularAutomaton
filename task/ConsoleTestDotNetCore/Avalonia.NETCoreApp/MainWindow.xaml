@@ -10,10 +10,11 @@
     
     <StackPanel Orientation="Horizontal">
         <StackPanel Orientation="Vertical" Width="200" Background="Gray">
-            <Button Name="StartBtn" Click="StartBtn_Click">Start</Button>
-            <Button Name="StopBtn" Click="StopBtn_Click">Stop</Button>
+            <Button Name="ChangeStatus" Click="ChangeStatus_Click">Start/Stop</Button>
             <Button Name="NextStepBtn" Click="NextStepBtn_Click">Next step</Button>
             <Button Name="GenerateBtn" Click="GenerateBtn_Click">Generate</Button>
+            <Button Name="Clear" Click="Clear_OnClick">Clear</Button>
+            <TextBlock Name="StatusTextBox">Status : started </TextBlock>
         </StackPanel>
         <StackPanel Name="RenderView" Background="Gray">
             <netCoreApp:RenderControl Name="RenderControl"></netCoreApp:RenderControl>
