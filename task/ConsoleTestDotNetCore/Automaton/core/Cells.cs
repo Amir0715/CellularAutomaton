@@ -5,7 +5,7 @@ namespace Automaton.core
     public class Cells
     {
         public Cell[][] Data { get; private set; }
-
+        
         public int Length()
         {
             return Data.Length;
@@ -67,6 +67,54 @@ namespace Automaton.core
         {
             get { return Data[i]; }
         }
+
+        public static Cells operator +(Cells c1, Cells c2)
+        {
+            var cols1 = c1.Data.GetLength(0);
+            var rows1 = c1.Data.GetLength(1);
+            
+            var cols2 = c2.Data.GetLength(0);
+            var rows2 = c2.Data.GetLength(1);
+            Cells result;
+            if (cols1 == cols2)
+            {
+                result = new Cells(cols1, rows1+rows2);
+                for (var j = 0; j < cols1; j++)
+                {
+                    for (var i = 0; i < rows1; i++)
+                    {
+                        result[i][j] = c1[i][j];
+                    }
+
+                    for (var i = rows1; i < rows2; i++)
+                    {
+                        result[i][j] = c2[i - rows1][j];
+                    }
+                }
+                
+            }else if (rows1 == rows2)
+            {
+                result = new Cells(cols1+cols2, rows1);
+                for (var i = 0; i < rows1; i++)
+                {
+                    for (var j = 0; j < cols1; j++)
+                    {
+                        result[i][j] = c1[i][j];
+                    }
+                    for (var j = cols1; j < cols2; j++)
+                    {
+                        result[i][j] = c2[i][j-cols1];
+                    }
+                }
+            }
+            else
+            {
+                result = new Cells();
+            }
+            return result;
+        }
+        
+        
         
         public static gRPCStructures.Cells CellsToGCells(Cells param)
         {

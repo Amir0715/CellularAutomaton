@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Grpc.Core;
 using Grpc.Net.Client;
@@ -15,19 +16,12 @@ namespace gRPCManager.Services
     {
         private readonly ILogger<ClientsService> _logger;
         private Worker.WorkerClient worker;
-        private GrpcChannel channel;
+        private Manager manager;
         public ClientsService(ILogger<ClientsService> logger)
         {
-            // пока добавляю только одного воркера для теста, потом увеличу их кол-во
-            AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", isEnabled: true);
-            channel = GrpcChannel.ForAddress(
-                "http://localhost:5002", new GrpcChannelOptions()
-                {
-                    Credentials = ChannelCredentials.Insecure,
-                    LoggerFactory = new NullLoggerFactory()
-                });
-            worker = new Worker.WorkerClient(channel);
             _logger = logger;
+            manager = new Manager();
+            manager.AddWorkerClient(manager.CreateNewWorker("http://localhost:5002"));
         }
 
         public override Task<test> Test(test request, ServerCallContext context)
@@ -41,17 +35,18 @@ namespace gRPCManager.Services
         
         public override Task<Cells> Generate(Size request, ServerCallContext context)
         {
-            return Task.FromResult(worker.Generate(request));
+            return Task.FromResult(manager.Generate(request));
         }
 
         public override Task<Cells> NextGeneration(Cells request, ServerCallContext context)
         {
-            return Task.FromResult(worker.NextGeneration(request));
+            return Task.FromResult(manager.WorkerClients[0].NextGeneration(request));
         }
 
         public override Task<Status> ChangeStatus(Status request, ServerCallContext context)
         {
-            return Task.FromResult(worker.ChangeStatus(request));
+            return Task.FromResult(manager.WorkerClients[0].ChangeStatus(request));
         }
+        
     }
 }

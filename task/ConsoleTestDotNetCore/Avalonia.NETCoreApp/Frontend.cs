@@ -32,14 +32,13 @@ namespace Avalonia.NETCoreApp
                     LoggerFactory = new NullLoggerFactory()
                 });
             client = new Client.ClientClient(Channel);
-            var call = client.Generate(
+            var recv = client.Generate(
                 new gRPCStructures.Size
                 {
                     Cols = cols,
                     Rows = rows
                 }
             );
-            var recv = call;
             var forU = GCellsToCells(recv);
             Data = new Cells();
             Data.Update(forU);
