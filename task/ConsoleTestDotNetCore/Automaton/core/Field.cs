@@ -41,12 +41,12 @@ namespace Automaton.core
             CountOfCores = 4;
         }
 
-        public Cell[][] Generate()
+        public Cell[][] Generate(int cols, int rows)
         {
             var r = new Random();
-            for (var i = 0; i < Columns; i++)
+            for (var i = 0; i < cols; i++)
             {
-                for (var j = 0; j < Rows; j++)
+                for (var j = 0; j < rows; j++)
                 {
                     Data[i][j].Generate(r);
                 }

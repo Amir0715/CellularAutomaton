@@ -9,7 +9,7 @@ namespace Automaton.Test
         public void TestGenerate()
         {
             var f = new Field(3,3);
-            var data = f.Generate();
+            var data = f.Generate(3,3);
             foreach (var VARIABLE in data)
             {
                 Assert.NotNull(VARIABLE);

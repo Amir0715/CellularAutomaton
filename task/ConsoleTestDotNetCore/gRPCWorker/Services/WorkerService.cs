@@ -37,7 +37,7 @@ namespace gRPCWorker.Services
             lock (locker)
             {
                 AutomatonObj = AutomatonBase.GetInstance(cols, rows);
-                res = AutomatonObj.Generate();
+                res = AutomatonObj.Generate(cols, rows);
             }
 
             return Task.FromResult(CellsToGCells(res));

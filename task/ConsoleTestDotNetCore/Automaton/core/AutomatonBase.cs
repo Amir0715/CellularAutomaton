@@ -30,9 +30,9 @@ namespace Automaton.core
             return IsStarted ? new Cells(Field.NextGeneration()) : new Cells(Field.Data);
         }
 
-        public Cells Generate()
+        public Cells Generate(int cols, int rows)
         {
-            return new Cells(Field.Generate());
+            return new Cells(Field.Generate(cols, rows));
         }
 
         public void SetCell(int x, int y)
