@@ -29,29 +29,37 @@ namespace Automaton.core
             }
             Rows = rows;
             Columns = cols;
-            Data = new Cell[cols][];
-            for (var i = 0; i < cols; i++)
-            {
-                Data[i] = new Cell[rows];
-                for (var j = 0; j < rows; j++)
-                {
-                    Data[i][j] = new Cell();
-                }
-            }
+            Data = init(cols, rows);
             CountOfCores = 4;
         }
 
+        private Cell[][] init(int cols, int rows)
+        {
+            var result = new Cell[cols][];
+            for (var i = 0; i < cols; i++)
+            {
+                result[i] = new Cell[rows];
+                for (var j = 0; j < rows; j++)
+                {
+                    result[i][j] = new Cell();
+                }
+            }
+
+            return result;
+        }
+        
         public Cell[][] Generate(int cols, int rows)
         {
             var r = new Random();
+            var res = init(cols, rows);
             for (var i = 0; i < cols; i++)
             {
                 for (var j = 0; j < rows; j++)
                 {
-                    Data[i][j].Generate(r);
+                    res[i][j].Generate(r);
                 }
             }
-            return Data;
+            return res;
         }
         
         public Cell[][] NextGeneration()

@@ -33,12 +33,9 @@ namespace gRPCWorker.Services
         {
             this.cols = request.Cols;
             this.rows = request.Rows;
-            Cells res;
-            lock (locker)
-            {
-                AutomatonObj = AutomatonBase.GetInstance(cols, rows);
-                res = AutomatonObj.Generate(cols, rows);
-            }
+            
+            AutomatonObj = AutomatonBase.GetInstance(cols, rows);
+            var res = AutomatonObj.Generate(cols, rows);
 
             return Task.FromResult(CellsToGCells(res));
         }

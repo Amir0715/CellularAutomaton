@@ -18,8 +18,8 @@ namespace gRPCManager.Services
             _logger = logger;
             manager = new Manager();
             manager.AddWorkerClient(manager.CreateNewWorker("http://localhost:5002"));
-            manager.AddWorkerClient(manager.CreateNewWorker("http://localhost:5003"));
-            manager.AddWorkerClient(manager.CreateNewWorker("http://localhost:5004"));
+            // manager.AddWorkerClient(manager.CreateNewWorker("http://localhost:5003"));
+            // manager.AddWorkerClient(manager.CreateNewWorker("http://localhost:5004"));
         }
 
         public override Task<test> Test(test request, ServerCallContext context)

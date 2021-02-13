@@ -17,8 +17,8 @@ namespace Avalonia.NETCoreApp
         private Client.ClientClient client; // клиент который будет связан с manager
         private GrpcChannel Channel; // канал для связи 
         public Cells Data;
-        private int rows;
-        private int cols;
+        public int rows;
+        public int cols;
         private bool IsStarted = false;
 
         private Frontend(int cols, int rows)

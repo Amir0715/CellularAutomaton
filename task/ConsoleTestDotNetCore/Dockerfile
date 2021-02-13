@@ -5,4 +5,4 @@ WORKDIR /opt/worker
 
 EXPOSE 5002
 
-ENTRYPOINT ["bash"]
+ENTRYPOINT ["dotnet", "gRPCWorker.dll"]

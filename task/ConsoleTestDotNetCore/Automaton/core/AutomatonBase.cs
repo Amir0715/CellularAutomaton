@@ -32,7 +32,7 @@ namespace Automaton.core
 
         public Cells Generate(int cols, int rows)
         {
-            return new Cells(Field.Generate(cols, rows));
+            return new(Field.Generate(cols, rows));
         }
 
         public void SetCell(int x, int y)
@@ -42,7 +42,7 @@ namespace Automaton.core
 
         public Cells Clear()
         {
-            return new Cells(Field.Clear());
+            return new(Field.Clear());
         }
         
     }
