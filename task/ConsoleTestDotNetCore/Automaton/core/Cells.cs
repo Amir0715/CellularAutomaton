@@ -68,53 +68,78 @@ namespace Automaton.core
             get { return Data[i]; }
         }
 
-        public Cells GetFromTo(int irow, int jrow)
+        public Cells GetFromTo(int irow, int jrow) // TODO irow < data[0].length [irow, jrow)
         {
-            var result = new Cells(rows:jrow-irow, cols:this.Data.Length);
-            for (var i = 0; i < jrow - irow; i++)
+            var result = new Cells(this.Data.Length, jrow-irow + 2);
+            if (irow != 0)
             {
-                result.Data[i] = this.Data[i];
+                for (var i = 0; i < this.Data.Length; i++)
+                {
+                    result.Data[i][0] = this.Data[i][irow-1];
+                }
+            }
+            if (jrow != this.Data[0].Length)
+            {
+                for (var i = 0; i < this.Data.Length; i++)
+                {
+                    result.Data[i][^1] = this.Data[i][jrow];
+                }
+            }
+            for (var i = 0; i < this.Data.Length; i++)
+            {
+                var k = 1;
+                for (var j = irow; j < jrow; j++)
+                {
+                    result.Data[i][k++] = this.Data[i][j];
+                }
             }
 
             return result;
         }
         
-        public static Cells operator +(Cells c1, Cells c2)
+        public static Cells operator +(Cells c1, Cells c2) // TODO fix c2.Data
         {
-            var cols1 = c1.Data.GetLength(0);
-            var rows1 = c1.Data.GetLength(1);
+            if (c1.Data == null)
+            {
+                return c2;
+            }
             
-            var cols2 = c2.Data.GetLength(0);
-            var rows2 = c2.Data.GetLength(1);
+            var cols1 = c1.Data.Length;
+            var rows1 = c1.Data[0].Length; // TODO fix c1.Data.GetLength(1)
+            
+            var cols2 = c2.Data.Length;
+            var rows2 = c2.Data[0].Length; // TODO fix c2.Data.GetLength(1)
             Cells result;
             if (cols1 == cols2)
             {
                 result = new Cells(cols1, rows1+rows2);
-                for (var j = 0; j < cols1; j++)
+                for (var i = 0; i < cols1; i++)
                 {
-                    for (var i = 0; i < rows1; i++)
+                    for (var j = 0; j < rows1; j++)
                     {
-                        result[i][j] = c1[i][j];
+                        result.Data[i][j] = c1.Data[i][j];
                     }
-
-                    for (var i = rows1; i < rows2; i++)
+                    // TODO CHECK
+                    for (var j = rows1; j < rows1+rows2; j++)
                     {
-                        result[i][j] = c2[i - rows1][j];
+                        result.Data[i][j] = c2.Data[i][j-rows1];
                     }
                 }
-                
-            }else if (rows1 == rows2)
+            }else if (cols1 != cols2 && rows1 == rows2)
             {
                 result = new Cells(cols1+cols2, rows1);
-                for (var i = 0; i < rows1; i++)
+                for (var i = 0; i < cols1; i++)
                 {
-                    for (var j = 0; j < cols1; j++)
+                    for (var j = 0; j < rows1; j++)
                     {
                         result[i][j] = c1[i][j];
                     }
-                    for (var j = cols1; j < cols2; j++)
+                }
+                for (var i = cols1; i < cols2; i++)
+                {
+                    for (var j = 0; j < rows1; j++)
                     {
-                        result[i][j] = c2[i][j-cols1];
+                        result[i][j] = c1[i-cols1][j];
                     }
                 }
             }

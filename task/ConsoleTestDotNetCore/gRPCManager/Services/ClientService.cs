@@ -18,6 +18,8 @@ namespace gRPCManager.Services
             _logger = logger;
             manager = new Manager();
             manager.AddWorkerClient(manager.CreateNewWorker("http://localhost:5002"));
+            manager.AddWorkerClient(manager.CreateNewWorker("http://localhost:5003"));
+            manager.AddWorkerClient(manager.CreateNewWorker("http://localhost:5004"));
         }
 
         public override Task<test> Test(test request, ServerCallContext context)
@@ -31,7 +33,7 @@ namespace gRPCManager.Services
         
         public override Task<Cells> Generate(Size request, ServerCallContext context)
         {
-            return Task.FromResult(manager.Generate(request));
+            return Task.FromResult(manager.Generate(request)); // todo fix 
         }
 
         public override Task<Cells> NextGeneration(Cells request, ServerCallContext context)
@@ -41,7 +43,7 @@ namespace gRPCManager.Services
 
         public override Task<Status> ChangeStatus(Status request, ServerCallContext context)
         {
-            return Task.FromResult(manager.WorkerClients[0].ChangeStatus(request));
+            return Task.FromResult(manager.ChangeStatus(request));
         }
         
     }

@@ -56,6 +56,10 @@ namespace Automaton.core
         
         public Cell[][] NextGeneration()
         {
+            // TODO CHECK
+            Columns = Data.Length;
+            Rows = Data[0].Length;
+            
             var tmp = new Cell[Columns][];
             for (var i = 0; i < Columns; i++)
             {
@@ -88,7 +92,18 @@ namespace Automaton.core
             TaskManager.RunAll();
             TaskManager.WaitAll();
             TaskManager.Clear();
-            Data = tmp;
+            
+            var tmp2 = new Cell[Columns][];
+            for (var i = 0; i < Columns; i++)
+            {
+                tmp2[i] = new Cell[Rows-2];
+                var k = 0;
+                for (int j = 1; j <= Rows-2; j++)
+                {
+                    tmp2[i][k++] = tmp[i][j];
+                }
+            }
+            Data = tmp2;
             return Data;
         }
         
@@ -96,7 +111,7 @@ namespace Automaton.core
         {
             for (var i = indexStart; i < indexEnd; i++)
             {
-                for (var j = 0; j < Rows; j++)
+                for (var j = 1; j < Rows-1; j++)
                 {
                     tmp[i][j] = Data[i][j].Life();
                 }
@@ -107,7 +122,7 @@ namespace Automaton.core
         {
             for (var i = indexStart; i < indexEnd; i++)
             {
-                for (var j = 0; j < Rows; j++)
+                for (var j = 1; j < Rows-1; j++)
                 {
                     UpdateNumbersOfNeighbors(i, j);
                 }
@@ -122,13 +137,11 @@ namespace Automaton.core
             {
                 for (var j = -1 ; j <= 1; j++)
                 {
-                    var col = Math.Abs(x + i) ;
-                    var row = Math.Abs(y + j);
-                    if (col >= Columns)
-                        col = Columns-1;
-                    if (row >= Rows)
-                        row = Rows-1;
-                    
+                    var col = x + i;
+                    var row = y + j;
+                    if (col < 0 || col >= Columns)
+                        continue;
+
                     if( ! ( (col == x ) && (row == y) ) && Data[col][row].IsAlive)
                     {
                         countOfNeighbors++;

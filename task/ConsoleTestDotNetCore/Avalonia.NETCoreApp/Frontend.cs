@@ -53,10 +53,7 @@ namespace Avalonia.NETCoreApp
 
         public void ChangeStatus()
         {
-            client.ChangeStatus(new Status
-            {
-                Data = !this.IsStarted
-            });
+            client.ChangeStatus(new Status());
             this.IsStarted = !this.IsStarted;
         }
         

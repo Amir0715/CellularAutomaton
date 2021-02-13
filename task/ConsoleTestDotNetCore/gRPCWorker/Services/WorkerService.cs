@@ -51,7 +51,7 @@ namespace gRPCWorker.Services
                 AutomatonObj = AutomatonBase.GetInstance();
                 res = AutomatonObj.ChangeStatus();
             }
-            return Task.FromResult(new Status{Data = res});
+            return Task.FromResult(new Status());
         }
 
         public override Task<gRPCStructures.Cells> NextGeneration(gRPCStructures.Cells request, ServerCallContext context)

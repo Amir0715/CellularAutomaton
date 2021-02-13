@@ -8,6 +8,8 @@ using gRPCWorker;
 using Microsoft.Extensions.Logging.Abstractions;
 
 using Cells = Automaton.core.Cells;
+using Status = gRPCStructures.Status;
+
 namespace gRPCManager
 {
     public class Manager
@@ -53,8 +55,9 @@ namespace gRPCManager
             else
             {
                 // TODO : CHECK
-                size.Rows = request.Rows % WorkerClients.Count;
-                result += GCellsToCells(WorkerClients[^1].Generate(size));
+                size.Rows = step + (request.Rows % step);
+                var recv = WorkerClients[^1].Generate(size);
+                result += GCellsToCells(recv);
             }
             return CellsToGCells(result);
         }
@@ -62,28 +65,23 @@ namespace gRPCManager
         public gRPCStructures.Cells NextGeneration(gRPCStructures.Cells request)
         {
             var cells = GCellsToCells(request);
-            var step = cells.Data.GetLength(0) / WorkerClients.Count;
+            var step = cells.Data[0].GetLength(0) / WorkerClients.Count;
             var result = new Cells();
             var start = 0;
             var end = step;
+            
+            gRPCStructures.Cells gcell;
             for (var i = 0; i < WorkerClients.Count - 1; i++)
             {
-                var gcell = CellsToGCells(cells.GetFromTo(start, end));
+                gcell = CellsToGCells(cells.GetFromTo(start, end)); // [start, end)
                 result += GCellsToCells(WorkerClients[i].NextGeneration(gcell));
                 start += step;
                 end += step;
             }
-            if (WorkerClients.Count == 1)
-            {
-                var gcell = CellsToGCells(cells.GetFromTo(start, end));
-                result = GCellsToCells(WorkerClients[^1].NextGeneration(gcell));
-            }
-            else
-            {
-                var gcell = CellsToGCells(cells.GetFromTo(start, cells.Data.GetLength(0)));
-                result += GCellsToCells(WorkerClients[^1].NextGeneration(gcell));
-            }
-
+            
+            gcell = CellsToGCells(cells.GetFromTo(start, cells.Data[0].GetLength(0)));
+            result += GCellsToCells(WorkerClients[^1].NextGeneration(gcell));
+            
             return CellsToGCells(result);
         }
         
@@ -137,6 +135,15 @@ namespace gRPCManager
             return new Cells(data);
         }
 
-        
+
+        public Status ChangeStatus(Status request)
+        {
+            foreach (var w in WorkerClients)
+            {
+                w.ChangeStatus(request);
+            }
+
+            return new Status();
+        }
     }
 }

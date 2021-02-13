@@ -27,6 +27,5 @@ message Size{
 }
 
 // можно передовать пустой объект
-message Status{ // 1 - работает, 0 - нет
-  bool Data = 1;
+message Status{
 }
