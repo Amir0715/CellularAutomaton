@@ -1,0 +1,11 @@
+syntax = "proto3";
+import "Structures.proto";
+
+option csharp_namespace = "gRPCClient";
+
+service Client {
+  rpc Test(test) returns(test);
+  rpc Generate(Size) returns(Cells);
+  rpc NextGeneration(Cells) returns(Cells);
+  rpc ChangeStatus(Status) returns(Status);
+}
