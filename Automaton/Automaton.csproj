@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Compile Remove="core\mainForm.cs" />
+      <Compile Remove="core\mainForm.Designer.cs" />
+      <EmbeddedResource Remove="core\mainForm.resx" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Grpc.Tools" Version="2.35.0">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+        <PackageReference Include="Google.Protobuf" Version="3.14.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+<!--      <ProjectReference Include="..\gRPCManager\gRPCManager.csproj" />-->
+        <Protobuf Include="..\Protos\Structures.proto" />
+    </ItemGroup>
+
+</Project>

@@ -1,0 +1,24 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:netCoreApp="clr-namespace:Avalonia.NETCoreApp"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="Avalonia.NETCoreApp.MainWindow"
+        Title="Avalonia.NETCoreApp"
+        WindowState="Maximized">
+    
+    <StackPanel Orientation="Horizontal">
+        <StackPanel Orientation="Vertical" Width="200" Background="Gray">
+            <Button Name="ChangeStatus" Click="ChangeStatus_Click">Start/Stop</Button>
+            <Button Name="NextStepBtn" Click="NextStepBtn_Click">Next step</Button>
+            <Button Name="GenerateBtn" Click="GenerateBtn_Click">Generate</Button>
+            <Button Name="Clear" Click="Clear_OnClick">Clear</Button>
+            <TextBlock Name="StatusTextBox">Status : started </TextBlock>
+        </StackPanel>
+        <StackPanel Name="RenderView" Background="Gray">
+            <netCoreApp:RenderControl Name="RenderControl"></netCoreApp:RenderControl>
+        </StackPanel>
+    
+    </StackPanel>
+</Window>
